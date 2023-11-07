@@ -8,16 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		2A2C38192AF8FC810008DFD8 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C38182AF8FC810008DFD8 /* SwiftFormat */; };
+		2A2C381C2AFA10D30008DFD8 /* AssetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C381B2AFA10D30008DFD8 /* AssetData.swift */; };
+		2A2C381F2AFA20060008DFD8 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C381E2AFA20060008DFD8 /* NavigationRouter.swift */; };
+		2A2C38222AFA209A0008DFD8 /* PopupRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38212AFA209A0008DFD8 /* PopupRoute.swift */; };
+		2A2C38242AFA20BE0008DFD8 /* AlertRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38232AFA20BE0008DFD8 /* AlertRoute.swift */; };
+		2A2C38262AFA210E0008DFD8 /* NavigationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */; };
 		2A5A63072AF8E5200081D404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63062AF8E5200081D404 /* Assets.xcassets */; };
 		2A5A630A2AF8E5200081D404 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */; };
 		E818707B71FA2790C6CA1DF5 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818795C6F2644617D500188 /* MainApp.swift */; };
 		E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81870290634DE22FE3E54F5 /* AssetsListViewModel.swift */; };
 		E818784EE5AA4402FE6013EA /* AssetsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */; };
 		E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818720B8BE8D8F6E7EE2E8E /* AssetsListViewState.swift */; };
-		E8187E13D1599018FADA2E65 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187FFFD11BC6BD7AAF54D5 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A2C381B2AFA10D30008DFD8 /* AssetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetData.swift; sourceTree = "<group>"; };
+		2A2C381E2AFA20060008DFD8 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		2A2C38212AFA209A0008DFD8 /* PopupRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRoute.swift; sourceTree = "<group>"; };
+		2A2C38232AFA20BE0008DFD8 /* AlertRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertRoute.swift; sourceTree = "<group>"; };
+		2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoute.swift; sourceTree = "<group>"; };
 		2A5A62FF2AF8E51E0081D404 /* AssetsBundlePOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssetsBundlePOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A63062AF8E5200081D404 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -25,7 +34,6 @@
 		E818720B8BE8D8F6E7EE2E8E /* AssetsListViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListViewState.swift; sourceTree = "<group>"; };
 		E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListView.swift; sourceTree = "<group>"; };
 		E818795C6F2644617D500188 /* MainApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
-		E8187FFFD11BC6BD7AAF54D5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +53,33 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2A2C381A2AFA10BF0008DFD8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2A2C381B2AFA10D30008DFD8 /* AssetData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2A2C381D2AFA1FF80008DFD8 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				2A2C38202AFA20910008DFD8 /* Routes */,
+				2A2C381E2AFA20060008DFD8 /* NavigationRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		2A2C38202AFA20910008DFD8 /* Routes */ = {
+			isa = PBXGroup;
+			children = (
+				2A2C38212AFA209A0008DFD8 /* PopupRoute.swift */,
+				2A2C38232AFA20BE0008DFD8 /* AlertRoute.swift */,
+				2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */,
+			);
+			path = Routes;
 			sourceTree = "<group>";
 		};
 		2A5A62F62AF8E51E0081D404 = {
@@ -85,8 +120,9 @@
 		E81871C437A9B20E78B9D632 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				2A2C381D2AFA1FF80008DFD8 /* Router */,
+				2A2C381A2AFA10BF0008DFD8 /* Data */,
 				E81874B96B16C9C4E2F8C456 /* Assets List */,
-				E8187FFFD11BC6BD7AAF54D5 /* ContentView.swift */,
 				E818795C6F2644617D500188 /* MainApp.swift */,
 			);
 			path = Code;
@@ -178,9 +214,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8187E13D1599018FADA2E65 /* ContentView.swift in Sources */,
+				2A2C38242AFA20BE0008DFD8 /* AlertRoute.swift in Sources */,
+				2A2C38262AFA210E0008DFD8 /* NavigationRoute.swift in Sources */,
 				E818707B71FA2790C6CA1DF5 /* MainApp.swift in Sources */,
 				E818784EE5AA4402FE6013EA /* AssetsListView.swift in Sources */,
+				2A2C381F2AFA20060008DFD8 /* NavigationRouter.swift in Sources */,
+				2A2C381C2AFA10D30008DFD8 /* AssetData.swift in Sources */,
+				2A2C38222AFA209A0008DFD8 /* PopupRoute.swift in Sources */,
 				E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */,
 				E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */,
 			);

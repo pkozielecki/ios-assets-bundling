@@ -7,18 +7,26 @@ import SwiftUI
 
 struct AssetsListView: View {
     let viewModel: AssetsListViewModel
+    let router: NavigationRouter
 
     var body: some View {
         List {
             Section(header: makeSectionHeader()) {
                 ForEach(viewModel.viewState.assets, id: \.self) { data in
-                    HStack {
-                        makeImage(for: data.state)
-                            .imageScale(.medium)
-                            .foregroundStyle(.tint)
-                        Text(data.name)
-                            .font(.body)
-                            .listRowSeparator(.hidden)
+                    Button {
+                        guard let destination = viewModel.calculateNavigationDesitination(for: data.id) else {
+                            return
+                        }
+                        router.push(route: destination)
+                    } label: {
+                        HStack {
+                            makeImage(for: data.state)
+                                .imageScale(.medium)
+                                .foregroundStyle(.tint)
+                            Text(data.name)
+                                .font(.body)
+                                .listRowSeparator(.hidden)
+                        }
                     }
                 }
             }
@@ -58,5 +66,8 @@ private extension AssetsListView {
 }
 
 #Preview {
-    AssetsListView(viewModel: AssetsListViewModel())
+    AssetsListView(
+        viewModel: AssetsListViewModel(),
+        router: LiveNavigationRouter()
+    )
 }

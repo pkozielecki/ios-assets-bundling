@@ -6,7 +6,7 @@
 import Foundation
 
 struct AssetListViewRowData: Equatable, Identifiable, Hashable {
-    let id: UUID
+    var id: String
     let state: State
     let name: String
 }
