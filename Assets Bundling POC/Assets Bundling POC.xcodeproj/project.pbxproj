@@ -27,6 +27,8 @@
 		2A2C38212AFA209A0008DFD8 /* PopupRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRoute.swift; sourceTree = "<group>"; };
 		2A2C38232AFA20BE0008DFD8 /* AlertRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertRoute.swift; sourceTree = "<group>"; };
 		2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoute.swift; sourceTree = "<group>"; };
+		2A2C38272AFB73590008DFD8 /* Assets Bundling POC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Assets Bundling POC.entitlements"; sourceTree = "<group>"; };
+		2A2C38282AFB73AA0008DFD8 /* Assets-Bundling-POC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Assets-Bundling-POC-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2A5A62FF2AF8E51E0081D404 /* AssetsBundlePOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssetsBundlePOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A63062AF8E5200081D404 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -102,6 +104,8 @@
 		2A5A63012AF8E51E0081D404 /* Assets Bundling POC */ = {
 			isa = PBXGroup;
 			children = (
+				2A2C38282AFB73AA0008DFD8 /* Assets-Bundling-POC-Info.plist */,
+				2A2C38272AFB73590008DFD8 /* Assets Bundling POC.entitlements */,
 				2A5A63062AF8E5200081D404 /* Assets.xcassets */,
 				2A5A63082AF8E5200081D404 /* Preview Content */,
 				E81871C437A9B20E78B9D632 /* Code */,
@@ -117,6 +121,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		E8187164BE83C2AC8857B290 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
 		E81871C437A9B20E78B9D632 /* Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +135,7 @@
 				2A2C381A2AFA10BF0008DFD8 /* Data */,
 				E81874B96B16C9C4E2F8C456 /* Assets List */,
 				E818795C6F2644617D500188 /* MainApp.swift */,
+				E8187A50D0404F3D18A99B75 /* Assets Manager */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -136,6 +148,14 @@
 				E818720B8BE8D8F6E7EE2E8E /* AssetsListViewState.swift */,
 			);
 			path = "Assets List";
+			sourceTree = "<group>";
+		};
+		E8187A50D0404F3D18A99B75 /* Assets Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E8187164BE83C2AC8857B290 /* Download */,
+			);
+			path = "Assets Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,12 +373,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "Assets Bundling POC/Assets Bundling POC.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Assets Bundling POC/Preview Content\"";
-				DEVELOPMENT_TEAM = 663KXV4GKQ;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 663KXV4GKQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Assets-Bundling-POC-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -371,6 +395,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.whitehatgaming.Assets-Bundling-POC";
 				PRODUCT_NAME = AssetsBundlePOC;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Assets Bundling POC Dev";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -385,12 +411,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "Assets Bundling POC/Assets Bundling POC.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Assets Bundling POC/Preview Content\"";
-				DEVELOPMENT_TEAM = 663KXV4GKQ;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 663KXV4GKQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Assets-Bundling-POC-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -403,6 +433,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.whitehatgaming.Assets-Bundling-POC";
 				PRODUCT_NAME = AssetsBundlePOC;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Assets Bundling POC AppStore";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
