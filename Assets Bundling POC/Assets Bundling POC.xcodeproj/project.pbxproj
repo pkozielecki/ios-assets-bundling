@@ -13,12 +13,17 @@
 		2A2C38222AFA209A0008DFD8 /* PopupRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38212AFA209A0008DFD8 /* PopupRoute.swift */; };
 		2A2C38242AFA20BE0008DFD8 /* AlertRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38232AFA20BE0008DFD8 /* AlertRoute.swift */; };
 		2A2C38262AFA210E0008DFD8 /* NavigationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */; };
+		2A2C382B2AFB8E440008DFD8 /* ConcurrentNgNetworkModule in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C382A2AFB8E440008DFD8 /* ConcurrentNgNetworkModule */; };
+		2A2C382D2AFB8E440008DFD8 /* NgNetworkModuleCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C382C2AFB8E440008DFD8 /* NgNetworkModuleCore */; };
 		2A5A63072AF8E5200081D404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63062AF8E5200081D404 /* Assets.xcassets */; };
 		2A5A630A2AF8E5200081D404 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */; };
 		E818707B71FA2790C6CA1DF5 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818795C6F2644617D500188 /* MainApp.swift */; };
 		E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81870290634DE22FE3E54F5 /* AssetsListViewModel.swift */; };
+		E81872FD053053AF5B5F1AF7 /* GetManifestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187396E1FD0E7890ACD4E1 /* GetManifestRequest.swift */; };
 		E818784EE5AA4402FE6013EA /* AssetsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */; };
+		E81879655FF71FC397101BED /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187510768C2D762E43E3BD /* AssetsManager.swift */; };
 		E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818720B8BE8D8F6E7EE2E8E /* AssetsListViewState.swift */; };
+		E8187EF6527C461293C1E8A2 /* GetManifestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187440D11F3D9DE1765028 /* GetManifestResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +39,10 @@
 		2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E81870290634DE22FE3E54F5 /* AssetsListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListViewModel.swift; sourceTree = "<group>"; };
 		E818720B8BE8D8F6E7EE2E8E /* AssetsListViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListViewState.swift; sourceTree = "<group>"; };
+		E8187396E1FD0E7890ACD4E1 /* GetManifestRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetManifestRequest.swift; sourceTree = "<group>"; };
+		E8187440D11F3D9DE1765028 /* GetManifestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetManifestResponse.swift; sourceTree = "<group>"; };
 		E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListView.swift; sourceTree = "<group>"; };
+		E8187510768C2D762E43E3BD /* AssetsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsManager.swift; sourceTree = "<group>"; };
 		E818795C6F2644617D500188 /* MainApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,6 +52,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A2C38192AF8FC810008DFD8 /* SwiftFormat in Frameworks */,
+				2A2C382D2AFB8E440008DFD8 /* NgNetworkModuleCore in Frameworks */,
+				2A2C382B2AFB8E440008DFD8 /* ConcurrentNgNetworkModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +146,18 @@
 				E81874B96B16C9C4E2F8C456 /* Assets List */,
 				E818795C6F2644617D500188 /* MainApp.swift */,
 				E8187A50D0404F3D18A99B75 /* Assets Manager */,
+				E81873E263C7BA74F47F0FC7 /* Networking */,
 			);
 			path = Code;
+			sourceTree = "<group>";
+		};
+		E81873E263C7BA74F47F0FC7 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E81875D7777AB09AA59F1634 /* Requests */,
+				E818752E241CC6A36B5139A8 /* Responses */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		E81874B96B16C9C4E2F8C456 /* Assets List */ = {
@@ -150,10 +170,27 @@
 			path = "Assets List";
 			sourceTree = "<group>";
 		};
+		E818752E241CC6A36B5139A8 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				E8187440D11F3D9DE1765028 /* GetManifestResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		E81875D7777AB09AA59F1634 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				E8187396E1FD0E7890ACD4E1 /* GetManifestRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		E8187A50D0404F3D18A99B75 /* Assets Manager */ = {
 			isa = PBXGroup;
 			children = (
 				E8187164BE83C2AC8857B290 /* Download */,
+				E8187510768C2D762E43E3BD /* AssetsManager.swift */,
 			);
 			path = "Assets Manager";
 			sourceTree = "<group>";
@@ -176,6 +213,8 @@
 			name = "Assets Bundling POC";
 			packageProductDependencies = (
 				2A2C38182AF8FC810008DFD8 /* SwiftFormat */,
+				2A2C382A2AFB8E440008DFD8 /* ConcurrentNgNetworkModule */,
+				2A2C382C2AFB8E440008DFD8 /* NgNetworkModuleCore */,
 			);
 			productName = "Assets Bundling POC";
 			productReference = 2A5A62FF2AF8E51E0081D404 /* AssetsBundlePOC.app */;
@@ -207,6 +246,7 @@
 			mainGroup = 2A5A62F62AF8E51E0081D404;
 			packageReferences = (
 				2A5A63102AF8E6970081D404 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+				2A2C38292AFB8E440008DFD8 /* XCRemoteSwiftPackageReference "ng-ios-network-module" */,
 			);
 			productRefGroup = 2A5A63002AF8E51E0081D404 /* Products */;
 			projectDirPath = "";
@@ -243,6 +283,9 @@
 				2A2C38222AFA209A0008DFD8 /* PopupRoute.swift in Sources */,
 				E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */,
 				E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */,
+				E81872FD053053AF5B5F1AF7 /* GetManifestRequest.swift in Sources */,
+				E8187EF6527C461293C1E8A2 /* GetManifestResponse.swift in Sources */,
+				E81879655FF71FC397101BED /* AssetsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +511,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2A2C38292AFB8E440008DFD8 /* XCRemoteSwiftPackageReference "ng-ios-network-module" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/netguru/ng-ios-network-module.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
 		2A5A63102AF8E6970081D404 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
@@ -483,6 +534,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2A5A63102AF8E6970081D404 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
 			productName = SwiftFormat;
+		};
+		2A2C382A2AFB8E440008DFD8 /* ConcurrentNgNetworkModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A2C38292AFB8E440008DFD8 /* XCRemoteSwiftPackageReference "ng-ios-network-module" */;
+			productName = ConcurrentNgNetworkModule;
+		};
+		2A2C382C2AFB8E440008DFD8 /* NgNetworkModuleCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A2C38292AFB8E440008DFD8 /* XCRemoteSwiftPackageReference "ng-ios-network-module" */;
+			productName = NgNetworkModuleCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

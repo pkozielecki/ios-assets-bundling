@@ -4,11 +4,22 @@
 //
 
 import SwiftUI
+import NgNetworkModuleCore
+import ConcurrentNgNetworkModule
 
 @main
 struct Assets_Bundling_POCApp: App {
     let model = AssetsListViewModel()
     let router = LiveNavigationRouter()
+    let networkModule: NetworkModule
+    let assetsManager: AssetsManager
+
+    init() {
+        let baseURL = URL(string: "https://cvws.icloud-content.com")!
+        let requestBuilder = DefaultRequestBuilder(baseURL: baseURL)
+        networkModule = DefaultNetworkModule(requestBuilder: requestBuilder)
+        assetsManager = LiveAssetsManager(manifestPath: .manifestPath, networkModule: networkModule)
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -33,6 +44,17 @@ struct Assets_Bundling_POCApp: App {
                 // TODO: Add alert support.
             }
         }
+    }
+}
+
+extension String {
+
+    static var manifestPath: String {
+        guard let infoDictionary = Bundle.main.infoDictionary,
+              let manifestURLString = infoDictionary["BAManifestURL"] as? String else {
+            return ""
+        }
+        return manifestURLString
     }
 }
 
