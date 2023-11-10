@@ -15,6 +15,8 @@
 		2A2C38262AFA210E0008DFD8 /* NavigationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */; };
 		2A2C382B2AFB8E440008DFD8 /* ConcurrentNgNetworkModule in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C382A2AFB8E440008DFD8 /* ConcurrentNgNetworkModule */; };
 		2A2C382D2AFB8E440008DFD8 /* NgNetworkModuleCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C382C2AFB8E440008DFD8 /* NgNetworkModuleCore */; };
+		2A2C38352AFE33AC0008DFD8 /* Assets_Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C38342AFE33AC0008DFD8 /* Assets_Downloader.swift */; };
+		2A2C38392AFE33AC0008DFD8 /* Assets Downloader.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 2A2C38322AFE33AC0008DFD8 /* Assets Downloader.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2A5A63072AF8E5200081D404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63062AF8E5200081D404 /* Assets.xcassets */; };
 		2A5A630A2AF8E5200081D404 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */; };
 		E818707B71FA2790C6CA1DF5 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818795C6F2644617D500188 /* MainApp.swift */; };
@@ -22,9 +24,35 @@
 		E81872FD053053AF5B5F1AF7 /* GetManifestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187396E1FD0E7890ACD4E1 /* GetManifestRequest.swift */; };
 		E818784EE5AA4402FE6013EA /* AssetsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */; };
 		E81879655FF71FC397101BED /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187510768C2D762E43E3BD /* AssetsManager.swift */; };
+		E81879BC6BE2F5CFE31E32EB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187EB4E4C848AD82CB65A5 /* Logger.swift */; };
 		E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818720B8BE8D8F6E7EE2E8E /* AssetsListViewState.swift */; };
 		E8187EF6527C461293C1E8A2 /* GetManifestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187440D11F3D9DE1765028 /* GetManifestResponse.swift */; };
+		E8187F898F2C4F027F3C5D82 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187B5E487BBF687E5744B0 /* Settings.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A2C38372AFE33AC0008DFD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A5A62F72AF8E51E0081D404 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A2C38312AFE33AC0008DFD8;
+			remoteInfo = "Assets Downloader";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2A2C383D2AFE33AC0008DFD8 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				2A2C38392AFE33AC0008DFD8 /* Assets Downloader.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2A2C381B2AFA10D30008DFD8 /* AssetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetData.swift; sourceTree = "<group>"; };
@@ -34,6 +62,10 @@
 		2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoute.swift; sourceTree = "<group>"; };
 		2A2C38272AFB73590008DFD8 /* Assets Bundling POC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Assets Bundling POC.entitlements"; sourceTree = "<group>"; };
 		2A2C38282AFB73AA0008DFD8 /* Assets-Bundling-POC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Assets-Bundling-POC-Info.plist"; sourceTree = SOURCE_ROOT; };
+		2A2C38322AFE33AC0008DFD8 /* Assets Downloader.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "Assets Downloader.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A2C38342AFE33AC0008DFD8 /* Assets_Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets_Downloader.swift; sourceTree = "<group>"; };
+		2A2C38362AFE33AC0008DFD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A2C383E2AFE365E0008DFD8 /* Assets DownloaderRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Assets DownloaderRelease.entitlements"; sourceTree = "<group>"; };
 		2A5A62FF2AF8E51E0081D404 /* AssetsBundlePOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssetsBundlePOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A63062AF8E5200081D404 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -44,9 +76,18 @@
 		E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListView.swift; sourceTree = "<group>"; };
 		E8187510768C2D762E43E3BD /* AssetsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsManager.swift; sourceTree = "<group>"; };
 		E818795C6F2644617D500188 /* MainApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
+		E8187B5E487BBF687E5744B0 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		E8187EB4E4C848AD82CB65A5 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2A2C382F2AFE33AC0008DFD8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2A5A62FC2AF8E51E0081D404 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,10 +135,21 @@
 			path = Routes;
 			sourceTree = "<group>";
 		};
+		2A2C38332AFE33AC0008DFD8 /* Assets Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				2A2C383E2AFE365E0008DFD8 /* Assets DownloaderRelease.entitlements */,
+				2A2C38342AFE33AC0008DFD8 /* Assets_Downloader.swift */,
+				2A2C38362AFE33AC0008DFD8 /* Info.plist */,
+			);
+			path = "Assets Downloader";
+			sourceTree = "<group>";
+		};
 		2A5A62F62AF8E51E0081D404 = {
 			isa = PBXGroup;
 			children = (
 				2A5A63012AF8E51E0081D404 /* Assets Bundling POC */,
+				2A2C38332AFE33AC0008DFD8 /* Assets Downloader */,
 				2A5A63002AF8E51E0081D404 /* Products */,
 				2A2C38172AF8FC810008DFD8 /* Frameworks */,
 			);
@@ -107,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				2A5A62FF2AF8E51E0081D404 /* AssetsBundlePOC.app */,
+				2A2C38322AFE33AC0008DFD8 /* Assets Downloader.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,11 +184,12 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		E8187164BE83C2AC8857B290 /* Download */ = {
+		E81870D06CEDB49C971C77B9 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E8187B5E487BBF687E5744B0 /* Settings.swift */,
 			);
-			path = Download;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		E81871C437A9B20E78B9D632 /* Code */ = {
@@ -147,6 +201,7 @@
 				E818795C6F2644617D500188 /* MainApp.swift */,
 				E8187A50D0404F3D18A99B75 /* Assets Manager */,
 				E81873E263C7BA74F47F0FC7 /* Networking */,
+				E818770CE55E4D703EB54E2F /* Utils */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -186,10 +241,26 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		E818761B0DB30C0DD8FCEC8C /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				E8187EB4E4C848AD82CB65A5 /* Logger.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		E818770CE55E4D703EB54E2F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E818761B0DB30C0DD8FCEC8C /* Logger */,
+				E81870D06CEDB49C971C77B9 /* Settings */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		E8187A50D0404F3D18A99B75 /* Assets Manager */ = {
 			isa = PBXGroup;
 			children = (
-				E8187164BE83C2AC8857B290 /* Download */,
 				E8187510768C2D762E43E3BD /* AssetsManager.swift */,
 			);
 			path = "Assets Manager";
@@ -198,6 +269,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2A2C38312AFE33AC0008DFD8 /* Assets Downloader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A2C383A2AFE33AC0008DFD8 /* Build configuration list for PBXNativeTarget "Assets Downloader" */;
+			buildPhases = (
+				2A2C382E2AFE33AC0008DFD8 /* Sources */,
+				2A2C382F2AFE33AC0008DFD8 /* Frameworks */,
+				2A2C38302AFE33AC0008DFD8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Assets Downloader";
+			productName = "Assets Downloader";
+			productReference = 2A2C38322AFE33AC0008DFD8 /* Assets Downloader.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 		2A5A62FE2AF8E51E0081D404 /* Assets Bundling POC */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2A5A630D2AF8E5200081D404 /* Build configuration list for PBXNativeTarget "Assets Bundling POC" */;
@@ -205,10 +293,12 @@
 				2A5A62FB2AF8E51E0081D404 /* Sources */,
 				2A5A62FC2AF8E51E0081D404 /* Frameworks */,
 				2A5A62FD2AF8E51E0081D404 /* Resources */,
+				2A2C383D2AFE33AC0008DFD8 /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2A2C38382AFE33AC0008DFD8 /* PBXTargetDependency */,
 			);
 			name = "Assets Bundling POC";
 			packageProductDependencies = (
@@ -230,6 +320,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					2A2C38312AFE33AC0008DFD8 = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					2A5A62FE2AF8E51E0081D404 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -253,11 +346,19 @@
 			projectRoot = "";
 			targets = (
 				2A5A62FE2AF8E51E0081D404 /* Assets Bundling POC */,
+				2A2C38312AFE33AC0008DFD8 /* Assets Downloader */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2A2C38302AFE33AC0008DFD8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2A5A62FD2AF8E51E0081D404 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,6 +371,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2A2C382E2AFE33AC0008DFD8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2C38352AFE33AC0008DFD8 /* Assets_Downloader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2A5A62FB2AF8E51E0081D404 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,12 +395,73 @@
 				E81872FD053053AF5B5F1AF7 /* GetManifestRequest.swift in Sources */,
 				E8187EF6527C461293C1E8A2 /* GetManifestResponse.swift in Sources */,
 				E81879655FF71FC397101BED /* AssetsManager.swift in Sources */,
+				E81879BC6BE2F5CFE31E32EB /* Logger.swift in Sources */,
+				E8187F898F2C4F027F3C5D82 /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2A2C38382AFE33AC0008DFD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A2C38312AFE33AC0008DFD8 /* Assets Downloader */;
+			targetProxy = 2A2C38372AFE33AC0008DFD8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		2A2C383B2AFE33AC0008DFD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 663KXV4GKQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Assets Downloader/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Assets Downloader";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.whitehatgaming.Assets-Bundling-POC.Assets-Downloader";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2A2C383C2AFE33AC0008DFD8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Assets Downloader/Assets DownloaderRelease.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 663KXV4GKQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Assets Downloader/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Assets Downloader";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.whitehatgaming.Assets-Bundling-POC.Assets-Downloader";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		2A5A630B2AF8E5200081D404 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -414,6 +584,7 @@
 		2A5A630E2AF8E5200081D404 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Assets Bundling POC/Assets Bundling POC.entitlements";
@@ -452,6 +623,7 @@
 		2A5A630F2AF8E5200081D404 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Assets Bundling POC/Assets Bundling POC.entitlements";
@@ -490,6 +662,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2A2C383A2AFE33AC0008DFD8 /* Build configuration list for PBXNativeTarget "Assets Downloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A2C383B2AFE33AC0008DFD8 /* Debug */,
+				2A2C383C2AFE33AC0008DFD8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2A5A62FA2AF8E51E0081D404 /* Build configuration list for PBXProject "Assets Bundling POC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

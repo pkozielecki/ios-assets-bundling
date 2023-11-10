@@ -18,7 +18,7 @@ struct Assets_Bundling_POCApp: App {
         let baseURL = URL(string: "https://cvws.icloud-content.com")!
         let requestBuilder = DefaultRequestBuilder(baseURL: baseURL)
         networkModule = DefaultNetworkModule(requestBuilder: requestBuilder)
-        assetsManager = LiveAssetsManager(manifestPath: .manifestPath, networkModule: networkModule)
+        assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
     }
 
     var body: some Scene {
@@ -44,17 +44,6 @@ struct Assets_Bundling_POCApp: App {
                 // TODO: Add alert support.
             }
         }
-    }
-}
-
-extension String {
-
-    static var manifestPath: String {
-        guard let infoDictionary = Bundle.main.infoDictionary,
-              let manifestURLString = infoDictionary["BAManifestURL"] as? String else {
-            return ""
-        }
-        return manifestURLString
     }
 }
 

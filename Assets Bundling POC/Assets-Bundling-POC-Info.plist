@@ -2,7 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AppGroupIdentifier</key>
+	<string>group.com.whitehatgaming.Assets-Bundling-POC</string>
 	<key>BAManifestURL</key>
-	<string>https://cvws.icloud-content.com/B/AVvwxqNm5Le72wqT8PWptlJ_ulpPAeBzFLoNaov-MMaaTRs43rhZ_v0s/manifest.json?o=ArdMKFl-R7kvaJadbc96IEO5gxWeaGkGKMTyz9oJMQVs&amp;v=1&amp;x=3&amp;a=CAogjdvGUUTj6y7hGuZtqmPnnkyRWveplXiAaI2DIVTcWcYSbRC96dzyujEYvca49LoxIgEAUgR_ulpPWgRZ_v0saiZ_iKCNhjmHMrQb7NiQdjlMVWltUWtR2VVJRu5k7npcaeMzyo43qHImP1CZXWaccMGi6iFyAoKggqS0cORRhVb41pdHxXCJJBxns0FKXck&amp;e=1699440632&amp;fl=&amp;r=15048625-110c-430f-90c4-f789e0d051b5-1&amp;k=41fY-9Wg7JDTdrPq7Jj7Zg&amp;ckc=com.apple.clouddocs&amp;ckz=com.apple.CloudDocs&amp;p=141&amp;s=adZOIUYQKEoEAPu_yPK6J97_AHU&amp;+=97e9e100-8823-49c6-99a7-e7da1dcc8198</string>
+	<string>https://lxruxq.am.files.1drv.com/y4mTPzC8FY3YPpLt56tgpMYGJoIzC5G9BZfH6v66K00ttM6l1c7PUIQrIFEiR9Q7vPRibEzM6nXN4Bx0Y5TNVKh26aXOXRk4ErOp3mwQSybijyuddiozj0cGFAV4xMxIRRDeEfHfKo6SULIqxEnZsepF9HJMf6UcNXo8OlzqGkfoyqiUbpe5NKjNHMBim3TbchFYotcWCQr5_iBRBsn0hqqgA</string>
+	<key>BAEssentialMaxInstallSize</key>
+	<integer>0</integer>
+	<key>BAMaxInstallSize</key>
+	<integer>311831236</integer>
+	<key>BAInitialDownloadRestrictions</key>
+	<dict>
+		<key>BADownloadAllowance</key>
+		<integer>311831236</integer>
+		<key>BADownloadDomainAllowList</key>
+		<array>
+			<string>https://cvws.icloud-content.com</string>
+			<string>https://tinyurl.com</string>
+			<string>https://lxruxq.am.files.1drv.com</string>
+		</array>
+		<key>BAEssentialDownloadAllowance</key>
+		<integer>0</integer>
+	</dict>
 </dict>
 </plist>
