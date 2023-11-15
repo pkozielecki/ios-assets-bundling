@@ -13,13 +13,14 @@ struct AssetListViewRowData: Equatable, Identifiable, Hashable {
 
 extension AssetListViewRowData {
 
-    enum State: Equatable {
+    enum State: Equatable, Hashable {
         case notLoaded
-        case loading
+        case loading(Int)
         case loaded
+        case failed
     }
 }
 
 struct AssetsListViewState: Equatable {
-    let assets: [AssetListViewRowData]
+    let assetsListRows: [AssetListViewRowData]
 }

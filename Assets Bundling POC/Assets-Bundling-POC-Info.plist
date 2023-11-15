@@ -16,9 +16,7 @@
 		<integer>311831236</integer>
 		<key>BADownloadDomainAllowList</key>
 		<array>
-			<string>https://cvws.icloud-content.com</string>
-			<string>https://tinyurl.com</string>
-			<string>https://lxruxq.am.files.1drv.com</string>
+			<string>https://*.1drv.com</string>
 		</array>
 		<key>BAEssentialDownloadAllowance</key>
 		<integer>0</integer>

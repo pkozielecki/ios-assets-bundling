@@ -12,7 +12,7 @@ struct AssetsListView: View {
     var body: some View {
         List {
             Section(header: makeSectionHeader()) {
-                ForEach(viewModel.viewState.assets, id: \.self) { data in
+                ForEach(viewModel.viewState.assetsListRows, id: \.self) { data in
                     Button {
                         guard let destination = viewModel.calculateNavigationDesitination(for: data.id) else {
                             return
@@ -45,9 +45,12 @@ private extension AssetsListView {
         case .loaded:
             Image(systemName: "checkmark.circle.fill")
         case .loading:
+            // TODO: Show animated progress.
             Image(systemName: "clock.arrow.circlepath")
         case .notLoaded:
             Image(systemName: "circle.dotted")
+        case .failed:
+            Image(systemName: "xmark.circle.fill")
         }
     }
 
@@ -65,9 +68,10 @@ private extension AssetsListView {
     }
 }
 
-#Preview {
-    AssetsListView(
-        viewModel: AssetsListViewModel(),
-        router: LiveNavigationRouter()
-    )
-}
+// TODO: Enable preview and use Preview dependencies.
+// #Preview {
+//    AssetsListView(
+//        viewModel: AssetsListViewModel(assetsProvider: LiveAssetsManager()),
+//        router: LiveNavigationRouter()
+//    )
+// }

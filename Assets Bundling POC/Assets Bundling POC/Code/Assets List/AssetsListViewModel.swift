@@ -5,37 +5,19 @@
 
 import Foundation
 import Observation
+import Combine
 
 @Observable final class AssetsListViewModel {
-    private(set) var viewState: AssetsListViewState
+    private let assetsProvider: AssetsProvider
+    private(set) var viewState: AssetsListViewState = .init(assetsListRows: [])
+    private var cancellables = Set<AnyCancellable>()
 
     @ObservationIgnored
     private var assets = [AssetData]()
 
-    init() {
-        // TODO: Read from local storage.
-        assets = [
-            AssetData(
-                id: "asset1",
-                name: "Asset 1",
-                localPath: "",
-                remoteURL: URL(string: "https://wp.pl")!
-            ),
-            AssetData(
-                id: "asset2",
-                name: "Asset 2",
-                localPath: "",
-                remoteURL: URL(string: "https://wp.pl")!
-            ),
-            AssetData(
-                id: "asset3",
-                name: "Asset 3",
-                localPath: "",
-                remoteURL: URL(string: "https://wp.pl")!
-            )
-        ]
-        // TODO: Get info about asset loading state:
-        viewState = AssetsListViewState(assets: assets.map { $0.makeViewData() })
+    init(assetsProvider: AssetsProvider) {
+        self.assetsProvider = assetsProvider
+        subscribeToAssetsProvider()
     }
 
     @MainActor func onViewAppeared() {}
@@ -53,5 +35,11 @@ import Observation
 
 private extension AssetsListViewModel {
 
-    func composeViewState() {}
+    func subscribeToAssetsProvider() {
+        assetsProvider.currentAssets.sink { [weak self] assets in
+            let assetListRows = assets.map { $0.makeRowViewData() }
+            self?.viewState = AssetsListViewState(assetsListRows: assetListRows)
+        }
+        .store(in: &cancellables)
+    }
 }

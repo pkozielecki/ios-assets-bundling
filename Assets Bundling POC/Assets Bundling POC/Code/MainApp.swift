@@ -6,10 +6,11 @@
 import SwiftUI
 import NgNetworkModuleCore
 import ConcurrentNgNetworkModule
+import Assets_Bundling_POC_Commons
 
 @main
 struct Assets_Bundling_POCApp: App {
-    let model = AssetsListViewModel()
+    let model: AssetsListViewModel
     let router = LiveNavigationRouter()
     let networkModule: NetworkModule
     let assetsManager: AssetsManager
@@ -19,6 +20,11 @@ struct Assets_Bundling_POCApp: App {
         let requestBuilder = DefaultRequestBuilder(baseURL: baseURL)
         networkModule = DefaultNetworkModule(requestBuilder: requestBuilder)
         assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
+        model = AssetsListViewModel(assetsProvider: assetsManager)
+
+        Task { [assetsManager] in
+            await assetsManager.start()
+        }
     }
 
     var body: some Scene {

@@ -4,10 +4,9 @@
 //
 
 import Foundation
+import Assets_Bundling_POC_Commons
 
-enum AppConfiguration {
-
-    static let appBundleGroup = "group.com.whitehatgaming.Assets-Bundling-POC"
+extension AppConfiguration {
 
     static var manifestPath: String {
         guard let infoDictionary = Bundle.main.infoDictionary,

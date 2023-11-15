@@ -5,6 +5,7 @@
 
 import Foundation
 import ExtensionFoundation
+import Assets_Bundling_POC_Commons
 
 /// The AppExtensionConfiguration that will be provided by this extension.
 /// This is typically defined by the extension host in a framework.
@@ -29,8 +30,9 @@ protocol ExampleExtension: AppExtension {}
 
 extension ExampleExtension {
     var configuration: ExampleConfiguration<some ExampleExtension> {
+        print(AppConfiguration.appBundleGroup)
         // Return your extension's configuration upon request.
-        ExampleConfiguration(self)
+        return ExampleConfiguration(self)
     }
 }
 
