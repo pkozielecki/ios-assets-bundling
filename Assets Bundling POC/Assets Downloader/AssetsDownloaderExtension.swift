@@ -1,5 +1,5 @@
 //
-//  Assets_Downloader.swift
+//  AssetsDownloaderExtension.swift
 //  Assets Bundling POC
 //
 
@@ -37,7 +37,7 @@ extension ExampleExtension {
 }
 
 @main
-class Assets_Downloader: ExampleExtension {
+class AssetsDownloaderExtension: ExampleExtension {
     required init() {
         // Initialize your extension here.
     }

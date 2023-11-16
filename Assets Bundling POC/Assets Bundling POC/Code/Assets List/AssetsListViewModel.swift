@@ -9,14 +9,19 @@ import Combine
 
 @Observable final class AssetsListViewModel {
     private let assetsProvider: AssetsProvider
-    private(set) var viewState: AssetsListViewState = .init(assetsListRows: [])
+    private let assetsCleaner: AssetsCleaner
+    private(set) var viewState: AssetsListViewState = .loading
     private var cancellables = Set<AnyCancellable>()
 
     @ObservationIgnored
     private var assets = [AssetData]()
 
-    init(assetsProvider: AssetsProvider) {
+    init(
+        assetsProvider: AssetsProvider,
+        assetsCleaner: AssetsCleaner
+    ) {
         self.assetsProvider = assetsProvider
+        self.assetsCleaner = assetsCleaner
         subscribeToAssetsProvider()
     }
 
@@ -31,15 +36,33 @@ import Combine
     }
 
     func onAssetSelected(_ assetID: String) {}
+
+    func onClearAssetsRequested() {
+        Task { @MainActor [weak self] in
+            self?.viewState = .noAssets
+            await self?.assetsCleaner.clear()
+        }
+    }
+
+    func onReloadRequested() {
+        Task { @MainActor [weak self] in
+            self?.viewState = .loading
+            await self?.assetsProvider.reloadAssets()
+        }
+    }
 }
 
 private extension AssetsListViewModel {
 
     func subscribeToAssetsProvider() {
-        assetsProvider.currentAssets.sink { [weak self] assets in
-            let assetListRows = assets.map { $0.makeRowViewData() }
-            self?.viewState = AssetsListViewState(assetsListRows: assetListRows)
-        }
-        .store(in: &cancellables)
+        assetsProvider.currentAssets
+            .receive(on: RunLoop.main)
+            .dropFirst()
+            .sink { [weak self] assets in
+                self?.assets = assets
+                let assetListRows = assets.map { $0.makeRowViewData() }
+                self?.viewState = assetListRows.isEmpty ? .noAssets : .loaded(assetsListRows: assetListRows)
+            }
+            .store(in: &cancellables)
     }
 }

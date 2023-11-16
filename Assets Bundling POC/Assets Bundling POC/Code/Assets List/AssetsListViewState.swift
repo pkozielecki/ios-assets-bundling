@@ -5,6 +5,12 @@
 
 import Foundation
 
+enum AssetsListViewState: Equatable {
+    case loading
+    case loaded(assetsListRows: [AssetListViewRowData])
+    case noAssets
+}
+
 struct AssetListViewRowData: Equatable, Identifiable, Hashable {
     var id: String
     let state: State
@@ -19,8 +25,4 @@ extension AssetListViewRowData {
         case loaded
         case failed
     }
-}
-
-struct AssetsListViewState: Equatable {
-    let assetsListRows: [AssetListViewRowData]
 }

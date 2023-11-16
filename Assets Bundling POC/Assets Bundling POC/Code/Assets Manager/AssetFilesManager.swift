@@ -1,5 +1,5 @@
 //
-//  AssetsManager.swift
+//  AssetFilesManager.swift
 //  Assets Bundling POC
 //
 
@@ -13,9 +13,14 @@ import Combine
 
 protocol AssetsProvider: AnyObject {
     var currentAssets: AnyPublisher<[AssetData], Never> { get }
+    func reloadAssets() async
 }
 
-protocol AssetsManager: AssetsProvider {
+protocol AssetsCleaner: AnyObject {
+    func clear() async
+}
+
+protocol AssetsManager: AssetsProvider, AssetsCleaner {
     func start() async
 }
 
@@ -39,7 +44,7 @@ final class LiveAssetsManager: NSObject, AssetsManager {
         networkModule: NetworkModule,
         downloadManager: BADownloadManager = .shared,
         storage: LocalStorage = UserDefaults(suiteName: AppConfiguration.appBundleGroup) ?? .standard,
-        fileManager: AssetFilesManager = LiveAssetFilesManager()
+        fileManager: AssetFilesManager = FileManager.default
     ) {
         self.manifestPath = manifestPath
         self.networkModule = networkModule
@@ -52,7 +57,12 @@ final class LiveAssetsManager: NSObject, AssetsManager {
         self.downloadManager.delegate = self
     }
 
-    @MainActor func start() async {
+    func start() async {
+        fileManager.setUp()
+        await reloadAssets()
+    }
+
+    func reloadAssets() async {
         let storedAssets = await readAssetsFromStorage()
         let manifestAssets = await fetchManifestPackages()
         let assetsToDownload = composeAssetsToDownload(storedAssets: storedAssets, manifestPackages: manifestAssets)
@@ -66,6 +76,15 @@ final class LiveAssetsManager: NSObject, AssetsManager {
         currentAssetsSubject.send(assets)
         await writeAssetsToStorage(assets)
         assetsToDownload.forEach(download)
+    }
+
+    func clear() async {
+        try? await storage.removeValue(forKey: StorageKeys.assets.rawValue)
+        assets.forEach {
+            try? fileManager.removeItem(at: fileManager.assetFileURL(for: $0.id))
+        }
+        assets = []
+        storeAndNotify(assets: assets)
     }
 }
 
@@ -97,20 +116,16 @@ extension LiveAssetsManager: BADownloadManagerDelegate {
     }
 
     func download(_ download: BADownload, finishedWithFileURL fileURL: URL) {
-        // TODO: Move file to the correct location.
-//        do {
-//            _ = try FileManager.default.replaceItemAt(session.fileURL, withItemAt: fileURL)
-//        } catch {
-//            Logger.app.error("Failed to move downloaded file: \(error)")
-//            return
-//        }
-
-//        Task { @MainActor in
-//            session.state = .downloaded
-//            await session.fetchThumbnail()
-//        }
-        updateAssetState(assetID: download.identifier, state: .loaded)
         Logger.app.info("APP - Download complete: \(download.identifier)")
+        let targetURL = fileManager.assetFileURL(for: download.identifier)
+        do {
+            _ = try fileManager.replaceItemAt(targetURL, withItemAt: fileURL, backupItemName: nil, options: [])
+            Logger.app.info("APP - File transferred: \(targetURL)")
+            updateAssetState(assetID: download.identifier, state: .loaded)
+        } catch {
+            Logger.app.error("APP - Failed to move downloaded file \(fileURL.absoluteString) \(targetURL.absoluteString), error: \(error)")
+            updateAssetState(assetID: download.identifier, state: .failed)
+        }
     }
 }
 
@@ -207,10 +222,15 @@ private extension LiveAssetsManager {
     }
 
     func updateAssetState(assetID: String, state: AssetData.State) {
-        assets = assets.map {
+        let assets = assets.map {
             guard $0.id == assetID else { return $0 }
             return $0.changingState(state)
         }
+        storeAndNotify(assets: assets)
+        self.assets = assets
+    }
+
+    func storeAndNotify(assets: [AssetData]) {
         Task {
             await writeAssetsToStorage(assets)
         }

@@ -49,11 +49,6 @@ extension AssetData {
         )
     }
 
-    // TODO: Compose path to asset:
-//    var path: URL {
-//
-//    }
-
     func makeRowViewData() -> AssetListViewRowData {
         AssetListViewRowData(
             id: id,

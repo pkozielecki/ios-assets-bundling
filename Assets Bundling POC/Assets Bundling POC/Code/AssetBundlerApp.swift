@@ -1,5 +1,5 @@
 //
-//  MainApp.swift
+//  AssetBundlerApp.swift
 //  Assets Bundling POC
 //
 
@@ -9,7 +9,7 @@ import ConcurrentNgNetworkModule
 import Assets_Bundling_POC_Commons
 
 @main
-struct Assets_Bundling_POCApp: App {
+struct AssetBundlerApp: App {
     let model: AssetsListViewModel
     let router = LiveNavigationRouter()
     let networkModule: NetworkModule
@@ -20,7 +20,7 @@ struct Assets_Bundling_POCApp: App {
         let requestBuilder = DefaultRequestBuilder(baseURL: baseURL)
         networkModule = DefaultNetworkModule(requestBuilder: requestBuilder)
         assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
-        model = AssetsListViewModel(assetsProvider: assetsManager)
+        model = AssetsListViewModel(assetsProvider: assetsManager, assetsCleaner: assetsManager)
 
         Task { [assetsManager] in
             await assetsManager.start()
@@ -53,7 +53,7 @@ struct Assets_Bundling_POCApp: App {
     }
 }
 
-private extension Assets_Bundling_POCApp {
+private extension AssetBundlerApp {
 
     func handlePopupRoute(_ popupRoute: PopupRoute?) {
         if let popupRoute {
