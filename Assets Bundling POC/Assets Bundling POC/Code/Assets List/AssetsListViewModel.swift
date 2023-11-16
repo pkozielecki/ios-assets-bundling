@@ -10,16 +10,19 @@ import Combine
 @Observable final class AssetsListViewModel {
     private let assetsProvider: AssetsProvider
     private let assetsCleaner: AssetsCleaner
-    private(set) var viewState: AssetsListViewState = .loading
-    private var cancellables = Set<AnyCancellable>()
+    private let router: NavigationRouter
 
-    @ObservationIgnored
-    private var assets = [AssetData]()
+    private(set) var viewState: AssetsListViewState = .loading
+
+    @ObservationIgnored private var cancellables = Set<AnyCancellable>()
+    @ObservationIgnored private var assets = [AssetData]()
 
     init(
+        router: NavigationRouter,
         assetsProvider: AssetsProvider,
         assetsCleaner: AssetsCleaner
     ) {
+        self.router = router
         self.assetsProvider = assetsProvider
         self.assetsCleaner = assetsCleaner
         subscribeToAssetsProvider()
@@ -27,15 +30,13 @@ import Combine
 
     @MainActor func onViewAppeared() {}
 
-    func calculateNavigationDesitination(for assetID: String) -> NavigationRoute? {
-        guard let data = assets.filter({ $0.id == assetID }).first else {
-            return nil
+    func onAssetSelected(_ assetID: String) {
+        guard let asset = assets.filter({ $0.id == assetID }).first else {
+            return
         }
 
-        return .assetDetails(data)
+        router.push(route: .assetDetails(asset))
     }
-
-    func onAssetSelected(_ assetID: String) {}
 
     func onClearAssetsRequested() {
         Task { @MainActor [weak self] in

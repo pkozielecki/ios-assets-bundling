@@ -20,7 +20,7 @@ struct AssetBundlerApp: App {
         let requestBuilder = DefaultRequestBuilder(baseURL: baseURL)
         networkModule = DefaultNetworkModule(requestBuilder: requestBuilder)
         assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
-        model = AssetsListViewModel(assetsProvider: assetsManager, assetsCleaner: assetsManager)
+        model = AssetsListViewModel(router: router, assetsProvider: assetsManager, assetsCleaner: assetsManager)
 
         Task { [assetsManager] in
             await assetsManager.start()
@@ -32,7 +32,7 @@ struct AssetBundlerApp: App {
             NavigationStack(
                 path: .init(get: { router.navigationStack }, set: { stack in router.set(navigationStack: stack) })
             ) {
-                AssetsListView(viewModel: model, router: router)
+                AssetsListView(viewModel: model)
                     .navigationDestination(for: NavigationRoute.self) { destination in
                         switch destination {
                         case let .assetDetails(asset):

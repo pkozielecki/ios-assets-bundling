@@ -7,7 +7,6 @@ import SwiftUI
 
 struct AssetsListView: View {
     let viewModel: AssetsListViewModel
-    let router: NavigationRouter
 
     var body: some View {
         ZStack {
@@ -15,10 +14,7 @@ struct AssetsListView: View {
                 Section(header: makeSectionHeader()) {
                     ForEach(assets, id: \.self) { data in
                         Button {
-                            guard let destination = viewModel.calculateNavigationDesitination(for: data.id) else {
-                                return
-                            }
-                            router.push(route: destination)
+                            viewModel.onAssetSelected(data.id)
                         } label: {
                             HStack {
                                 makeImage(for: data.state)
