@@ -34,5 +34,6 @@ struct AssetListRowView: View {
                 .listRowSeparator(.hidden)
                 .tint(.primary)
         }
+        .animation(.easeIn, value: data.state)
     }
 }

@@ -7,36 +7,42 @@ import Foundation
 import ExtensionFoundation
 import Assets_Bundling_POC_Commons
 import BackgroundAssets
-import NgNetworkModuleCore
-import ConcurrentNgNetworkModule
 import OSLog
 
 @main
 class AssetsDownloaderExtension: BADownloaderExtension {
-    private let networkModule: NetworkModule
-    private var packages: [GetManifestResponse.Package]?
+    private var packages: [GetManifestResponse.Package] = []
 
     required init() {
-        Logger.ext.warning("Extension initialized")
-        networkModule = NetworkingFactory.makeNetworkModule()
+        // TODO: Make .debug() visible in the console.
+        Logger.ext.debug("Extension initialized")
     }
 
     func downloads(for request: BAContentRequest, manifestURL: URL, extensionInfo: BAAppExtensionInfo) -> Set<BADownload> {
-        // Discussion: This is not an async method, so we need to stop the thread until we get the manifest.
-        let semaphore = DispatchSemaphore(value: 0)
-        Logger.ext.warning("Loading manifest \(manifestURL.absoluteString)")
-        Task { [weak self] in
-            self?.packages = await self?.getManifest(url: manifestURL)
-            Logger.ext.debug("Packages loaded \(self?.packages ?? [])")
-            semaphore.signal()
+        // Discussion: At this moment, the manifest is already downloaded and stored locally.
+        // TODO: Change to debug() or info().
+        Logger.ext.warning("Loading manifest \(manifestURL.absoluteString, privacy: .public)")
+        guard let data = try? Data(contentsOf: manifestURL) else {
+            Logger.ext.error("Loading manifest failed")
+            return []
         }
-        semaphore.wait()
-        return Set(composeDownloads())
+
+        let manifest = try? JSONDecoder().decode(GetManifestResponse.self, from: data)
+        packages = manifest?.packages ?? []
+        Logger.ext.warning("Manifest loaded, packages: \(packages.count, privacy: .public)")
+
+        // TODO: load packages from storage for cross-reference.
+        return Set(composeDownloads(from: packages))
     }
 
-    func backgroundDownload(_ failedDownload: BADownload, failedWithError error: Error) {}
+    func backgroundDownload(_ failedDownload: BADownload, failedWithError error: Error) {
+        // TODO: Change to debug() or info().
+        Logger.ext.error("Loading failed: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
+    }
 
-    func backgroundDownload(_ finishedDownload: BADownload, finishedWithFileURL fileURL: URL) {}
+    func backgroundDownload(_ finishedDownload: BADownload, finishedWithFileURL fileURL: URL) {
+        Logger.ext.warning("Loading success: \(finishedDownload.identifier, privacy: .public), error: \(fileURL.absoluteString, privacy: .public)")
+    }
 
     func backgroundDownload(
         _ download: BADownload,
@@ -48,21 +54,8 @@ class AssetsDownloaderExtension: BADownloaderExtension {
 
 private extension AssetsDownloaderExtension {
 
-    func getManifest(url: URL) async -> [GetManifestResponse.Package] {
-        let request = GetManifestRequest(path: url.absoluteString)
-        if let response = try? await networkModule.performAndDecode(request: request, responseType: GetManifestResponse.self) {
-            return response.packages
-        } else {
-            return []
-        }
-    }
-
-    func composeDownloads() -> [BAURLDownload] {
-        guard let packages = packages else {
-            return []
-        }
-
-        return packages.map { package in
+    func composeDownloads(from packages: [GetManifestResponse.Package]) -> [BAURLDownload] {
+        packages.map { package in
             BAURLDownload(
                 identifier: package.id,
                 request: URLRequest(url: package.url!),

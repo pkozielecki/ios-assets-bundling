@@ -17,7 +17,6 @@ struct AssetsListView: View {
                             viewModel.onAssetSelected(data.id)
                         } label: {
                             AssetListRowView(data: data)
-                                .animation(.easeIn, value: data.state)
                         }
                     }
                 }

@@ -16,7 +16,10 @@
 		<integer>311831236</integer>
 		<key>BADownloadDomainAllowList</key>
 		<array>
-			<string>files.1drv.com</string>
+			<string>lxrgxq.am.files.1drv.com</string>
+			<string>lxrfxq.am.files.1drv.com</string>
+			<string>lxrwxq.am.files.1drv.com</string>
+			<string>lxruxq.am.files.1drv.com</string>
 		</array>
 		<key>BAEssentialDownloadAllowance</key>
 		<integer>0</integer>
