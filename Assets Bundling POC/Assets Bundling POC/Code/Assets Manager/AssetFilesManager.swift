@@ -91,7 +91,7 @@ final class LiveAssetsManager: NSObject, AssetsManager {
 extension LiveAssetsManager: BADownloadManagerDelegate {
 
     func downloadDidBegin(_ download: BADownload) {
-        Logger.app.warning("APP - Did begin download: \(download.identifier)")
+        Logger.app.info("APP - Did begin download: \(download.identifier)")
         updateAssetState(assetID: download.identifier, state: .loading(0))
     }
 
@@ -106,7 +106,7 @@ extension LiveAssetsManager: BADownloadManagerDelegate {
         }
 
         let progress = Double(totalBytesWritten) / Double(totalExpectedBytes)
-        updateAssetState(assetID: download.identifier, state: .loading(Int(progress * 100)))
+        updateAssetState(assetID: download.identifier, state: .loading(progress))
         Logger.app.info("APP - Download \(download.identifier) progress: \(progress)")
     }
 

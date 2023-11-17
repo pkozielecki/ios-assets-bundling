@@ -16,7 +16,7 @@
 		<integer>311831236</integer>
 		<key>BADownloadDomainAllowList</key>
 		<array>
-			<string>https://*.1drv.com</string>
+			<string>files.1drv.com</string>
 		</array>
 		<key>BAEssentialDownloadAllowance</key>
 		<integer>0</integer>

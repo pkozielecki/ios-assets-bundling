@@ -16,15 +16,8 @@ struct AssetsListView: View {
                         Button {
                             viewModel.onAssetSelected(data.id)
                         } label: {
-                            HStack {
-                                makeImage(for: data.state)
-                                    .imageScale(.medium)
-                                    .foregroundStyle(.tint)
-                                Text(data.name)
-                                    .font(.body)
-                                    .listRowSeparator(.hidden)
-                            }
-                            .animation(.easeIn, value: data.state)
+                            AssetListRowView(data: data)
+                                .animation(.easeIn, value: data.state)
                         }
                     }
                 }
@@ -63,26 +56,11 @@ private extension AssetsListView {
         return []
     }
 
-    func makeImage(for assetState: AssetListViewRowData.State) -> Image {
-        switch assetState {
-        case .loaded:
-            Image(systemName: "checkmark.circle.fill")
-        case .loading:
-            // TODO: Show animated progress.
-            Image(systemName: "clock.arrow.circlepath")
-        case .notLoaded:
-            Image(systemName: "circle.dotted")
-        case .failed:
-            Image(systemName: "xmark.circle.fill")
-        }
-    }
-
     func makeSectionHeader() -> some View {
         HStack {
             Text("Assets:")
             Spacer()
             Button {
-                // TODO: Show alert.
                 viewModel.onClearAssetsRequested()
             } label: {
                 Image(systemName: "clear.fill")

@@ -6,6 +6,7 @@
 import Foundation
 import Observation
 import Combine
+import Assets_Bundling_POC_Commons
 
 @Observable final class AssetsListViewModel {
     private let assetsProvider: AssetsProvider
@@ -39,6 +40,7 @@ import Combine
     }
 
     func onClearAssetsRequested() {
+        // TODO: Show alert before continuing.
         Task { @MainActor [weak self] in
             self?.viewState = .noAssets
             await self?.assetsCleaner.clear()

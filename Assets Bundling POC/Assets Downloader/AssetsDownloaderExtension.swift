@@ -6,39 +6,71 @@
 import Foundation
 import ExtensionFoundation
 import Assets_Bundling_POC_Commons
-
-/// The AppExtensionConfiguration that will be provided by this extension.
-/// This is typically defined by the extension host in a framework.
-struct ExampleConfiguration<E: ExampleExtension>: AppExtensionConfiguration {
-
-    let appExtension: E
-
-    init(_ appExtension: E) {
-        self.appExtension = appExtension
-    }
-
-    /// Determine whether to accept the XPC connection from the host.
-    func accept(connection: NSXPCConnection) -> Bool {
-        // TODO: Configure the XPC connection and return true
-        false
-    }
-}
-
-/// The AppExtension protocol to which this extension will conform.
-/// This is typically defined by the extension host in a framework.
-protocol ExampleExtension: AppExtension {}
-
-extension ExampleExtension {
-    var configuration: ExampleConfiguration<some ExampleExtension> {
-        print(AppConfiguration.appBundleGroup)
-        // Return your extension's configuration upon request.
-        return ExampleConfiguration(self)
-    }
-}
+import BackgroundAssets
+import NgNetworkModuleCore
+import ConcurrentNgNetworkModule
+import OSLog
 
 @main
-class AssetsDownloaderExtension: ExampleExtension {
+class AssetsDownloaderExtension: BADownloaderExtension {
+    private let networkModule: NetworkModule
+    private var packages: [GetManifestResponse.Package]?
+
     required init() {
-        // Initialize your extension here.
+        Logger.ext.warning("Extension initialized")
+        networkModule = NetworkingFactory.makeNetworkModule()
+    }
+
+    func downloads(for request: BAContentRequest, manifestURL: URL, extensionInfo: BAAppExtensionInfo) -> Set<BADownload> {
+        // Discussion: This is not an async method, so we need to stop the thread until we get the manifest.
+        let semaphore = DispatchSemaphore(value: 0)
+        Logger.ext.warning("Loading manifest \(manifestURL.absoluteString)")
+        Task { [weak self] in
+            self?.packages = await self?.getManifest(url: manifestURL)
+            Logger.ext.debug("Packages loaded \(self?.packages ?? [])")
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return Set(composeDownloads())
+    }
+
+    func backgroundDownload(_ failedDownload: BADownload, failedWithError error: Error) {}
+
+    func backgroundDownload(_ finishedDownload: BADownload, finishedWithFileURL fileURL: URL) {}
+
+    func backgroundDownload(
+        _ download: BADownload,
+        didReceive challenge: URLAuthenticationChallenge
+    ) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
+        (.performDefaultHandling, nil)
+    }
+}
+
+private extension AssetsDownloaderExtension {
+
+    func getManifest(url: URL) async -> [GetManifestResponse.Package] {
+        let request = GetManifestRequest(path: url.absoluteString)
+        if let response = try? await networkModule.performAndDecode(request: request, responseType: GetManifestResponse.self) {
+            return response.packages
+        } else {
+            return []
+        }
+    }
+
+    func composeDownloads() -> [BAURLDownload] {
+        guard let packages = packages else {
+            return []
+        }
+
+        return packages.map { package in
+            BAURLDownload(
+                identifier: package.id,
+                request: URLRequest(url: package.url!),
+                essential: false, // TODO: Change when there are essential downloads.
+                fileSize: package.size,
+                applicationGroupIdentifier: AppConfiguration.appBundleGroup,
+                priority: .default
+            )
+        }
     }
 }

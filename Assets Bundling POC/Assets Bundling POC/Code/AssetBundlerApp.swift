@@ -16,9 +16,7 @@ struct AssetBundlerApp: App {
     let assetsManager: AssetsManager
 
     init() {
-        let baseURL = URL(string: "https://cvws.icloud-content.com")!
-        let requestBuilder = DefaultRequestBuilder(baseURL: baseURL)
-        networkModule = DefaultNetworkModule(requestBuilder: requestBuilder)
+        networkModule = NetworkingFactory.makeNetworkModule()
         assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
         model = AssetsListViewModel(router: router, assetsProvider: assetsManager, assetsCleaner: assetsManager)
 
