@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import BackgroundAssets
 
 public struct AssetData: Equatable, Hashable, Codable {
     public let id: String
@@ -32,7 +33,7 @@ extension AssetData {
         case failed
     }
 
-    public init(from package: GetManifestResponse.Package) {
+    public init(from package: ManifestPackage) {
         self.init(
             id: package.id,
             name: package.name,
@@ -40,6 +41,21 @@ extension AssetData {
             created: package.created,
             size: package.size,
             remoteURL: package.url
+        )
+    }
+
+    public var baDownload: BAURLDownload {
+        guard let remoteURL else {
+            fatalError("🛠️🔴 Remote URL is nil for asset \(id).")
+        }
+
+        return BAURLDownload(
+            identifier: id,
+            request: URLRequest(url: remoteURL),
+            essential: false, // TODO: Change when there are essential downloads.
+            fileSize: size,
+            applicationGroupIdentifier: AppConfiguration.appBundleGroup,
+            priority: .default
         )
     }
 

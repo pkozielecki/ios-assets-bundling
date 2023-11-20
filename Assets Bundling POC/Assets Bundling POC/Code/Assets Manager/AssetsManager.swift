@@ -1,5 +1,5 @@
 //
-//  AssetFilesManager.swift
+//  AssetsManager.swift
 //  Assets Bundling POC
 //
 
@@ -91,7 +91,7 @@ final class LiveAssetsManager: NSObject, AssetsManager {
 extension LiveAssetsManager: BADownloadManagerDelegate {
 
     func downloadDidBegin(_ download: BADownload) {
-        Logger.app.info("APP - Did begin download: \(download.identifier)")
+        Logger.app.info("📱🟢Did begin download: \(download.identifier)")
         updateAssetState(assetID: download.identifier, state: .loading(0))
     }
 
@@ -107,7 +107,7 @@ extension LiveAssetsManager: BADownloadManagerDelegate {
 
         let progress = Double(totalBytesWritten) / Double(totalExpectedBytes)
         updateAssetState(assetID: download.identifier, state: .loading(progress))
-        Logger.app.info("APP - Download \(download.identifier) progress: \(progress)")
+        Logger.app.info("📱🟢Download \(download.identifier) progress: \(progress)")
     }
 
     func download(_ download: BADownload, failedWithError error: Error) {
@@ -116,14 +116,14 @@ extension LiveAssetsManager: BADownloadManagerDelegate {
     }
 
     func download(_ download: BADownload, finishedWithFileURL fileURL: URL) {
-        Logger.app.info("APP - Download complete: \(download.identifier)")
+        Logger.app.info("📱🟢Download complete: \(download.identifier)")
         let targetURL = fileManager.assetFileURL(for: download.identifier)
         do {
             _ = try fileManager.replaceItemAt(targetURL, withItemAt: fileURL, backupItemName: nil, options: [])
-            Logger.app.info("APP - File transferred: \(targetURL)")
+            Logger.app.info("📱🟢File transferred: \(targetURL)")
             updateAssetState(assetID: download.identifier, state: .loaded)
         } catch {
-            Logger.app.error("APP - Failed to move downloaded file \(fileURL.absoluteString) \(targetURL.absoluteString), error: \(error)")
+            Logger.app.error("📱🔴Failed to move downloaded file \(fileURL.absoluteString) \(targetURL.absoluteString), error: \(error)")
             updateAssetState(assetID: download.identifier, state: .failed)
         }
     }
@@ -136,7 +136,7 @@ private extension LiveAssetsManager {
             let packages: [AssetData]? = try await storage.getValue(forKey: StorageKeys.assets.rawValue)
             return packages ?? []
         } catch {
-            Logger.app.error("APP - Failed to read assets from storage: \(error)")
+            Logger.app.error("📱🔴Failed to read assets from storage: \(error)")
             return []
         }
     }
@@ -145,22 +145,22 @@ private extension LiveAssetsManager {
         do {
             try await storage.setValue(assets, forKey: StorageKeys.assets.rawValue)
         } catch {
-            Logger.app.error("APP - Failed to write assets to storage: \(error)")
+            Logger.app.error("📱🔴Failed to write assets to storage: \(error)")
         }
     }
 
-    func fetchManifestPackages() async -> [GetManifestResponse.Package] {
+    func fetchManifestPackages() async -> [ManifestPackage] {
         let request = GetManifestRequest(path: manifestPath)
         do {
             let response = try await networkModule.performAndDecode(request: request, responseType: GetManifestResponse.self)
             return response.packages
         } catch {
-            Logger.app.error("APP - Manifest Error: \(error)")
+            Logger.app.error("📱🔴Manifest Error: \(error)")
             return []
         }
     }
 
-    func composeAssetsToDownload(storedAssets: [AssetData], manifestPackages: [GetManifestResponse.Package]) -> [AssetData] {
+    func composeAssetsToDownload(storedAssets: [AssetData], manifestPackages: [ManifestPackage]) -> [AssetData] {
         manifestPackages.filter {
             !isAlreadyDownloaded(package: $0, storedAssets: storedAssets)
         }.map {
@@ -175,15 +175,10 @@ private extension LiveAssetsManager {
     }
 
     func download(package: AssetData) {
-        guard let url = package.remoteURL else {
-            Logger.app.error("APP - Invalid URL for package \(package.id)")
-            return
-        }
-
         // TODO: Rewrite into async/await.
         downloadManager.withExclusiveControl { [weak self] lockAcquired, error in
             guard let self, lockAcquired else {
-                Logger.app.error("APP - Failed to acquire lock or object deallocated: \(error)")
+                Logger.app.error("📱🔴Failed to acquire lock or object deallocated: \(error)")
                 return
             }
 
@@ -194,22 +189,22 @@ private extension LiveAssetsManager {
                 if let existingDownload = currentDownloads.first(where: { $0.identifier == package.id }) {
                     download = existingDownload
                 } else {
-                    download = composeAssetDownload(asset: package, url: url)
+                    download = package.baDownload
                 }
 
                 guard download.state != .failed else {
-                    Logger.app.warning("APP - Download for session \(package.id) is in the failed state.")
+                    Logger.app.warning("📱🟠Download for session \(package.id) is in the failed state.")
                     return
                 }
 
                 try downloadManager.startForegroundDownload(download)
             } catch {
-                Logger.app.warning("APP - Failed to start download for session \(package.id): \(error.localizedDescription)")
+                Logger.app.warning("📱🟠Failed to start download for session \(package.id): \(error.localizedDescription)")
             }
         }
     }
 
-    func isAlreadyDownloaded(package: GetManifestResponse.Package, storedAssets: [AssetData]) -> Bool {
+    func isAlreadyDownloaded(package: ManifestPackage, storedAssets: [AssetData]) -> Bool {
         // Discussion: An asset is downloaded only when stored & was not modified since last download.
         storedAssets.contains {
             $0.id == package.id && $0.state == .loaded && $0.createdDate == package.createdDate
@@ -235,16 +230,5 @@ private extension LiveAssetsManager {
             await writeAssetsToStorage(assets)
         }
         currentAssetsSubject.send(assets)
-    }
-
-    func composeAssetDownload(asset: AssetData, url: URL) -> BAURLDownload {
-        BAURLDownload(
-            identifier: asset.id,
-            request: URLRequest(url: url),
-            essential: false,
-            fileSize: Int(asset.size),
-            applicationGroupIdentifier: AppConfiguration.appBundleGroup,
-            priority: .default
-        )
     }
 }
