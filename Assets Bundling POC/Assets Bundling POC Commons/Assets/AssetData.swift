@@ -29,6 +29,7 @@ extension AssetData {
     public enum State: Codable, Equatable, Hashable {
         case notLoaded
         case loading(Double)
+        case toBeTransferred
         case loaded
         case failed
     }
@@ -72,5 +73,17 @@ extension AssetData {
             size: size,
             remoteURL: remoteURL
         )
+    }
+}
+
+extension AssetData.State {
+
+    var isDownloadCompleted: Bool {
+        switch self {
+        case .loaded, .toBeTransferred:
+            return true
+        default:
+            return false
+        }
     }
 }

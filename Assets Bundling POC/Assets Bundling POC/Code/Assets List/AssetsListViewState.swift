@@ -22,6 +22,7 @@ extension AssetListViewRowData {
     enum State: Equatable, Hashable {
         case notLoaded
         case loading(Double)
+        case toBeTransferred
         case loaded
         case failed
     }

@@ -27,6 +27,8 @@ extension AssetData.State {
             .loading(progress)
         case .loaded:
             .loaded
+        case .toBeTransferred:
+            .toBeTransferred
         case .failed:
             .failed
         }
