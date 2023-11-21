@@ -81,9 +81,9 @@ extension AssetData.State {
     var isDownloadCompleted: Bool {
         switch self {
         case .loaded, .toBeTransferred:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }

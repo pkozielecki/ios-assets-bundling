@@ -33,7 +33,7 @@ final class LiveAssetsManager: NSObject, AssetsManager {
     private let manifestPath: String
     private let networkModule: NetworkModule
     private let currentAssetsComposer: CurrentAssetsComposer
-    private let downloadManager: BADownloadManager // TODO: Wrap in protocol
+    private let downloadManager: BAWrapper
     private let storage: LocalStorage
     private let fileManager: AssetFilesManager
 
@@ -41,12 +41,12 @@ final class LiveAssetsManager: NSObject, AssetsManager {
     private var currentAssetsSubject: CurrentValueSubject<[AssetData], Never> = .init([])
 
     init(
-            manifestPath: String,
-            networkModule: NetworkModule,
-            currentAssetsComposer: CurrentAssetsComposer = LiveCurrentAssetsComposer(),
-            downloadManager: BADownloadManager = .shared,
-            storage: LocalStorage = UserDefaults(suiteName: AppConfiguration.appBundleGroup) ?? .standard,
-            fileManager: AssetFilesManager = FileManager.default
+        manifestPath: String,
+        networkModule: NetworkModule,
+        currentAssetsComposer: CurrentAssetsComposer = LiveCurrentAssetsComposer(),
+        downloadManager: BAWrapper = BADownloadManager.shared,
+        storage: LocalStorage = UserDefaults(suiteName: AppConfiguration.appBundleGroup) ?? .standard,
+        fileManager: AssetFilesManager = FileManager.default
     ) {
         self.manifestPath = manifestPath
         self.networkModule = networkModule
@@ -71,7 +71,7 @@ final class LiveAssetsManager: NSObject, AssetsManager {
         storage.writeAssetsToStorage(assets)
 
         transfer(currentAssets.assetsToTransfer)
-        currentAssets.assetsToDownload.forEach(download)
+        startDownloading(assets: currentAssets.assetsToDownload)
 
         currentAssetsSubject.send(assets)
     }
@@ -95,10 +95,10 @@ extension LiveAssetsManager: BADownloadManagerDelegate {
     }
 
     func download(
-            _ download: BADownload,
-            didWriteBytes bytesWritten: Int64,
-            totalBytesWritten: Int64,
-            totalBytesExpectedToWrite totalExpectedBytes: Int64
+        _ download: BADownload,
+        didWriteBytes bytesWritten: Int64,
+        totalBytesWritten: Int64,
+        totalBytesExpectedToWrite totalExpectedBytes: Int64
     ) {
         guard type(of: download) == BAURLDownload.self else {
             return
@@ -161,33 +161,36 @@ private extension LiveAssetsManager {
         }
     }
 
-    func download(package: AssetData) {
-        // TODO: Rewrite into async/await.
+    func startDownloading(assets: [AssetData]) {
         downloadManager.withExclusiveControl { [weak self] lockAcquired, error in
             guard let self, lockAcquired else {
                 Logger.app.error("📱🔴Failed to acquire lock or object deallocated: \(error, privacy: .public)")
                 return
             }
 
-            do {
-                let download: BADownload
-                let currentDownloads = try downloadManager.fetchCurrentDownloads()
+            assets.forEach(download)
+        }
+    }
 
-                if let existingDownload = currentDownloads.first(where: { $0.identifier == package.id }) {
-                    download = existingDownload
-                } else {
-                    download = package.baDownload
-                }
+    func download(package: AssetData) {
+        do {
+            let download: BADownload
+            let currentDownloads = try downloadManager.fetchCurrentDownloads()
 
-                guard download.state != .failed else {
-                    Logger.app.warning("📱🟠Download for session \(package.id, privacy: .public) is in the failed state.")
-                    return
-                }
-
-                try downloadManager.startForegroundDownload(download)
-            } catch {
-                Logger.app.warning("📱🟠Failed to start download for session \(package.id, privacy: .public): \(error.localizedDescription, privacy: .public)")
+            if let existingDownload = currentDownloads.first(where: { $0.identifier == package.id }) {
+                download = existingDownload
+            } else {
+                download = package.baDownload
             }
+
+            guard download.state != .failed else {
+                Logger.app.warning("📱🟠Download for session \(package.id, privacy: .public) is in the failed state.")
+                return
+            }
+
+            try downloadManager.startForegroundDownload(download)
+        } catch {
+            Logger.app.warning("📱🟠Failed to start download for session \(package.id, privacy: .public): \(error.localizedDescription, privacy: .public)")
         }
     }
 

@@ -1,3 +1,8 @@
+//
+//  CurrentAssets.swift
+//  Assets Bundling POC
+//
+
 import Foundation
 
 public struct CurrentAssets {

@@ -33,6 +33,7 @@
 		E818707B71FA2790C6CA1DF5 /* AssetBundlerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818795C6F2644617D500188 /* AssetBundlerApp.swift */; };
 		E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81870290634DE22FE3E54F5 /* AssetsListViewModel.swift */; };
 		E81874D0A2658008DCA4C487 /* UserDefaults+LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818788AC956175DDF5C8400 /* UserDefaults+LocalStorage.swift */; };
+		E818751F89375242CC92ED49 /* BAWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187714E38DD163C837F942 /* BAWrapper.swift */; };
 		E8187633F295BEB03E2146B2 /* ManifestPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81873712D5158B6AFFAC74D /* ManifestPackage.swift */; };
 		E81876A1D95404B51250F7BE /* URL + Manifest Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81872327BE16E05FF413AB6 /* URL + Manifest Parsing.swift */; };
 		E81876CEF57DDD2208B205DF /* NetworkingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187E4DF063E9913DC123D2 /* NetworkingFactory.swift */; };
@@ -141,6 +142,7 @@
 		E81874A1DF772D8F82D3FA1D /* AssetsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListView.swift; sourceTree = "<group>"; };
 		E8187510768C2D762E43E3BD /* AssetsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsManager.swift; sourceTree = "<group>"; };
 		E818768374FD13F981ACC0E7 /* GetManifestRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetManifestRequest.swift; sourceTree = "<group>"; };
+		E8187714E38DD163C837F942 /* BAWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAWrapper.swift; sourceTree = "<group>"; };
 		E818782E854E116AB49A84BE /* AssetFilesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFilesManager.swift; sourceTree = "<group>"; };
 		E818788AC956175DDF5C8400 /* UserDefaults+LocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+LocalStorage.swift"; sourceTree = "<group>"; };
 		E818795C6F2644617D500188 /* AssetBundlerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetBundlerApp.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				E818791CCF11A42BB7A76536 /* Networking */,
 				E8187B220E8D02CF62DFA320 /* Assets */,
 				E81870983DA993A3A733BA30 /* Extensions */,
+				E81870BE3191EB75228FF25E /* BADownloadManager */,
 			);
 			path = "Assets Bundling POC Commons";
 			sourceTree = "<group>";
@@ -296,6 +299,14 @@
 				E8187F3ED46D2B6D540DFF4D /* AssetData Array + State Change.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E81870BE3191EB75228FF25E /* BADownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				E8187714E38DD163C837F942 /* BAWrapper.swift */,
+			);
+			path = BADownloadManager;
 			sourceTree = "<group>";
 		};
 		E81870D06CEDB49C971C77B9 /* Settings */ = {
@@ -642,6 +653,7 @@
 				E81874D0A2658008DCA4C487 /* UserDefaults+LocalStorage.swift in Sources */,
 				E81876A1D95404B51250F7BE /* URL + Manifest Parsing.swift in Sources */,
 				E8187CEE65586BE796F3411F /* AssetData Array + State Change.swift in Sources */,
+				E818751F89375242CC92ED49 /* BAWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

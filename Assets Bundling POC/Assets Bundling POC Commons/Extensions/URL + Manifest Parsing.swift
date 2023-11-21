@@ -1,3 +1,8 @@
+//
+//  URL + Manifest Parsing.swift
+//  Assets Bundling POC
+//
+
 import Foundation
 import OSLog
 

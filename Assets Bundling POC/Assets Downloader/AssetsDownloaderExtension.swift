@@ -14,14 +14,14 @@ class AssetsDownloaderExtension: BADownloaderExtension {
     let currentAssetsComposer: CurrentAssetsComposer
     let storage: LocalStorage
     let fileManager: AssetFilesManager
-    let downloadManager: BADownloadManager // TODO: Wrap in protocol
+    let downloadManager: BAWrapper
     private var assets: [AssetData] = []
 
     required init() {
         currentAssetsComposer = LiveCurrentAssetsComposer()
         storage = UserDefaults(suiteName: AppConfiguration.appBundleGroup) ?? .standard
         fileManager = FileManager.default
-        downloadManager = .shared
+        downloadManager = BADownloadManager.shared
 
         fileManager.setUp()
         Logger.ext.log("🤖🟢Extension initialized")
@@ -35,7 +35,7 @@ class AssetsDownloaderExtension: BADownloaderExtension {
 
         assets = currentAssets.allAssets
 
-        Logger.ext.log("🤖🟢Assets to download: \(currentAssets.assetsToDownload.map {$0.id}, privacy: .public)")
+        Logger.ext.log("🤖🟢Assets to download: \(currentAssets.assetsToDownload.map { $0.id }, privacy: .public)")
         return Set(currentAssets.assetsToDownload.map { $0.baDownload })
     }
 
@@ -51,7 +51,7 @@ class AssetsDownloaderExtension: BADownloaderExtension {
                 return
             }
 
-            self.moveDownloadedPackage(finishedDownload: finishedDownload, tempFileURL: ephemeralFileURL)
+            moveDownloadedPackage(finishedDownload: finishedDownload, tempFileURL: ephemeralFileURL)
         }
     }
 
@@ -64,14 +64,14 @@ class AssetsDownloaderExtension: BADownloaderExtension {
             }
 
             Logger.ext.log("🤖🔴Loading failed: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
-            self.updateAssetState(assetID: failedDownload.identifier, newState: .failed)
+            updateAssetState(assetID: failedDownload.identifier, newState: .failed)
             // TODO: Schedule failed, essential download
         }
     }
 
     func backgroundDownload(
-            _ download: BADownload,
-            didReceive challenge: URLAuthenticationChallenge
+        _ download: BADownload,
+        didReceive challenge: URLAuthenticationChallenge
     ) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
         (.performDefaultHandling, nil)
     }

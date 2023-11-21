@@ -1,3 +1,8 @@
+//
+//  CurrentAssetsComposer.swift
+//  Assets Bundling POC
+//
+
 import Foundation
 
 public protocol CurrentAssetsComposer {
@@ -13,15 +18,15 @@ public struct LiveCurrentAssetsComposer: CurrentAssetsComposer {
         let assetsToDownload = composeAssetsToDownload(storedAssets: storedAssets, manifestPackages: manifestPackages)
         let manifestPackagesIDs = manifestPackages.map { $0.id }
         let readyAssets = composeReadyAssets(
-                storedAssets: storedAssets,
-                assetsToDownload: assetsToDownload,
-                assetsToTransfer: assetsToTransfer,
-                manifestPackageIDs: manifestPackagesIDs
+            storedAssets: storedAssets,
+            assetsToDownload: assetsToDownload,
+            assetsToTransfer: assetsToTransfer,
+            manifestPackageIDs: manifestPackagesIDs
         )
         return CurrentAssets(
-                assetsToDownload: assetsToDownload,
-                readyAssets: readyAssets,
-                assetsToTransfer: assetsToTransfer
+            assetsToDownload: assetsToDownload,
+            readyAssets: readyAssets,
+            assetsToTransfer: assetsToTransfer
         )
     }
 }
@@ -30,24 +35,24 @@ private extension LiveCurrentAssetsComposer {
 
     func composeAssetsToDownload(storedAssets: [AssetData], manifestPackages: [ManifestPackage]) -> [AssetData] {
         manifestPackages.filter {
-                    !isAlreadyDownloaded(package: $0, storedAssets: storedAssets)
-                }.map {
-                    AssetData(from: $0)
-                }
+            !isAlreadyDownloaded(package: $0, storedAssets: storedAssets)
+        }.map {
+            AssetData(from: $0)
+        }
     }
 
     func composeReadyAssets(
-            storedAssets: [AssetData],
-            assetsToDownload: [AssetData],
-            assetsToTransfer: [AssetData],
-            manifestPackageIDs: [String]
+        storedAssets: [AssetData],
+        assetsToDownload: [AssetData],
+        assetsToTransfer: [AssetData],
+        manifestPackageIDs: [String]
     ) -> [AssetData] {
         storedAssets.filter {
             isReadyAndValid(
-                    asset: $0,
-                    assetsToDownload: assetsToDownload,
-                    assetsToTransfer: assetsToTransfer,
-                    manifestPackageIDs: manifestPackageIDs
+                asset: $0,
+                assetsToDownload: assetsToDownload,
+                assetsToTransfer: assetsToTransfer,
+                manifestPackageIDs: manifestPackageIDs
             )
         }
     }
@@ -60,14 +65,14 @@ private extension LiveCurrentAssetsComposer {
     }
 
     func isReadyAndValid(
-            asset: AssetData,
-            assetsToDownload: [AssetData],
-            assetsToTransfer: [AssetData],
-            manifestPackageIDs: [String]
+        asset: AssetData,
+        assetsToDownload: [AssetData],
+        assetsToTransfer: [AssetData],
+        manifestPackageIDs: [String]
     ) -> Bool {
         // Discussion: An asset is already downloaded and transferred to a permanent location.
         manifestPackageIDs.contains(asset.id)
-                && !assetsToDownload.contains { $0.id == asset.id }
-                && !assetsToTransfer.contains { $0.id == asset.id }
+            && !assetsToDownload.contains { $0.id == asset.id }
+            && !assetsToTransfer.contains { $0.id == asset.id }
     }
 }

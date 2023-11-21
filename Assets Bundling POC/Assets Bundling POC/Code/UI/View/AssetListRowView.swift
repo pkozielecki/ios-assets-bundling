@@ -21,9 +21,9 @@ struct AssetListRowView: View {
                 ProgressView(value: progress)
                     .progressViewStyle(GaugeProgressStyle())
                     .frame(width: thumbnailWidth, height: thumbnailHeight)
-                case .toBeTransferred:
-                    Image(systemName: "arrow.down.circle.fill")
-                        .assetListIconStyle()
+            case .toBeTransferred:
+                Image(systemName: "arrow.down.circle.fill")
+                    .assetListIconStyle()
             case .notLoaded:
                 ProgressView(value: 0)
                     .progressViewStyle(GaugeProgressStyle())
