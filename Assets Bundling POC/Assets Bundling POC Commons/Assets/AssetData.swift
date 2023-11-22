@@ -9,14 +9,16 @@ import BackgroundAssets
 public struct AssetData: Equatable, Hashable, Codable {
     public let id: String
     public let name: String
+    public let description: String
     public let state: State
     public let created: Double
     public let size: Int
     public let remoteURL: URL?
 
-    public init(id: String, name: String, state: State, created: Double, size: Int, remoteURL: URL?) {
+    public init(id: String, name: String, description: String, state: State, created: Double, size: Int, remoteURL: URL?) {
         self.id = id
         self.name = name
+        self.description = description
         self.state = state
         self.created = created
         self.size = size
@@ -38,6 +40,7 @@ extension AssetData {
         self.init(
             id: package.id,
             name: package.name,
+            description: package.description,
             state: .notLoaded, // Discussion: Package download is not started yet.
             created: package.created,
             size: package.size,
@@ -68,6 +71,7 @@ extension AssetData {
         AssetData(
             id: id,
             name: name,
+            description: description,
             state: newState,
             created: created,
             size: size,

@@ -68,10 +68,15 @@ private extension AssetsListView {
     }
 }
 
-// TODO: Enable preview and use Preview dependencies.
-// #Preview {
-//    AssetsListView(
-//        viewModel: AssetsListViewModel(assetsProvider: LiveAssetsManager()),
-//        router: LiveNavigationRouter()
-//    )
-// }
+#Preview {
+    let model = PreviewAssetListViewModel()
+    let assetListRows: [AssetListViewRowData] = [
+        .init(id: "abc", state: .loading(0.5), name: "asset1"),
+        .init(id: "def", state: .loaded, name: "asset2"),
+        .init(id: "zxy", state: .failed, name: "asset3"),
+        .init(id: "uio", state: .notLoaded, name: "asset4"),
+        .init(id: "ert", state: .toBeTransferred, name: "asset5")
+    ]
+    model.viewState = .loaded(assetsListRows: assetListRows)
+    return AssetsListView(viewModel: model)
+}

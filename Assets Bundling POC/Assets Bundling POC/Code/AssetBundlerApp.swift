@@ -18,7 +18,7 @@ struct AssetBundlerApp: App {
     init() {
         networkModule = NetworkingFactory.makeNetworkModule()
         assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
-        model = AssetsListViewModel(router: router, assetsProvider: assetsManager, assetsCleaner: assetsManager)
+        model = LiveAssetsListViewModel(router: router, assetsProvider: assetsManager, assetsCleaner: assetsManager)
 
         Task { [assetsManager] in
             await assetsManager.start()
@@ -34,7 +34,13 @@ struct AssetBundlerApp: App {
                     .navigationDestination(for: NavigationRoute.self) { destination in
                         switch destination {
                         case let .assetDetails(asset):
-                            Text(asset.name)
+                            AssetDetailsView(
+                                viewModel: LiveAssetDetailsViewModel(
+                                    selectedAsset: asset,
+                                    router: router,
+                                    assetStateManager: assetsManager
+                                )
+                            )
                         }
                     }
                     .sheet(

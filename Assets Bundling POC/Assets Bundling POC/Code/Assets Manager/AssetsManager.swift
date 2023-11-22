@@ -16,11 +16,15 @@ protocol AssetsProvider: AnyObject {
     func reloadAssets() async
 }
 
+protocol AssetStateManager: AnyObject {
+    func updateAssetState(assetID: String, newState: AssetData.State)
+}
+
 protocol AssetsCleaner: AnyObject {
     func clear() async
 }
 
-protocol AssetsManager: AssetsProvider, AssetsCleaner {
+protocol AssetsManager: AssetsProvider, AssetsCleaner, AssetStateManager {
     func start() async
 }
 
@@ -78,12 +82,19 @@ final class LiveAssetsManager: NSObject, AssetsManager {
 
     func clear() {
         try? storage.removeValue(forKey: StorageKeys.assets.rawValue)
-        assets.forEach {
-            try? fileManager.removeItem(at: fileManager.sharedStorageAssetFile(for: $0.id))
-            try? fileManager.removeItem(at: fileManager.permanentStorageAssetFile(for: $0.id))
-        }
+
+        try? fileManager.removeItem(at: fileManager.sharedAssetsContainer)
+        try? fileManager.removeItem(at: fileManager.permanentAssetsContainer)
+        fileManager.setUp()
+
         assets = []
         storeAndNotify(assets: assets)
+    }
+
+    func updateAssetState(assetID: String, newState: AssetData.State) {
+        let updatedAssets = assets.updateState(assetID: assetID, newState: newState)
+        storeAndNotify(assets: updatedAssets)
+        assets = updatedAssets
     }
 }
 
@@ -192,12 +203,6 @@ private extension LiveAssetsManager {
         } catch {
             Logger.app.warning("📱🟠Failed to start download for session \(package.id, privacy: .public): \(error.localizedDescription, privacy: .public)")
         }
-    }
-
-    func updateAssetState(assetID: String, newState: AssetData.State) {
-        let updatedAssets = assets.updateState(assetID: assetID, newState: newState)
-        storeAndNotify(assets: updatedAssets)
-        assets = updatedAssets
     }
 
     func storeAndNotify(assets: [AssetData]) {

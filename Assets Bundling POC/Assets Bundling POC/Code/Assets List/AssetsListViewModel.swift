@@ -8,7 +8,16 @@ import Observation
 import Combine
 import Assets_Bundling_POC_Commons
 
-@Observable final class AssetsListViewModel {
+protocol AssetsListViewModel: Observable {
+    var viewState: AssetsListViewState { get }
+
+    func onViewAppeared()
+    func onAssetSelected(_ assetID: String)
+    func onClearAssetsRequested()
+    func onReloadRequested()
+}
+
+@Observable final class LiveAssetsListViewModel: AssetsListViewModel {
     private let assetsProvider: AssetsProvider
     private let assetsCleaner: AssetsCleaner
     private let router: NavigationRouter
@@ -55,7 +64,7 @@ import Assets_Bundling_POC_Commons
     }
 }
 
-private extension AssetsListViewModel {
+private extension LiveAssetsListViewModel {
 
     func subscribeToAssetsProvider() {
         assetsProvider.currentAssets

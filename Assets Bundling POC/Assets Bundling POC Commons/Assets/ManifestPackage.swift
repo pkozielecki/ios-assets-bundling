@@ -9,6 +9,7 @@ import BackgroundAssets
 public struct ManifestPackage: Codable {
     public let id: String
     public let name: String
+    public let description: String
     public let path: String
     public let size: Int
     public let created: Double

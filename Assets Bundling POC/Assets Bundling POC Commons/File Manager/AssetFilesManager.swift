@@ -4,16 +4,34 @@
 //
 
 import Foundation
+import ZIPFoundation
 
 public protocol AssetFilesManager {
+    var permanentAssetsContainer: URL { get }
+    var sharedAssetsContainer: URL { get }
+
     func setUp()
     func sharedStorageAssetFile(for assetID: String) -> URL
     func permanentStorageAssetFile(for assetID: String) -> URL
     func ephemeralStorageAssetFile(for assetID: String) -> URL
-    func replaceItemAt(_ originalItemURL: URL, withItemAt newItemURL: URL, backupItemName: String?, options: FileManager.ItemReplacementOptions) throws -> URL?
+    func unpackedAssetFolder(for assetID: String) -> URL
+    func replaceItemAt(
+        _ originalItemURL: URL,
+        withItemAt newItemURL: URL,
+        backupItemName: String?,
+        options: FileManager.ItemReplacementOptions
+    ) throws -> URL?
     func moveItem(at srcURL: URL, to dstURL: URL) throws
     func removeItem(at URL: URL) throws
     func fileExists(atPath path: String) -> Bool
+    func folderExists(at url: URL) -> Bool
+    func unzipItem(
+        at sourceURL: URL,
+        to destinationURL: URL,
+        skipCRC32: Bool,
+        progress: Progress?,
+        pathEncoding: String.Encoding?
+    ) throws
     func createDirectory(
         at url: URL,
         withIntermediateDirectories createIntermediates: Bool,
@@ -57,6 +75,15 @@ extension FileManager: AssetFilesManager {
 
     public func permanentStorageAssetFile(for assetID: String) -> URL {
         permanentAssetsContainer.appending(component: "\(assetID).zip", directoryHint: .notDirectory)
+    }
+
+    public func unpackedAssetFolder(for assetID: String) -> URL {
+        permanentAssetsContainer.appending(component: assetID, directoryHint: .isDirectory)
+    }
+
+    public func folderExists(at url: URL) -> Bool {
+        var isDirectory: ObjCBool = false
+        return fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue
     }
 
     public func setUp() {
