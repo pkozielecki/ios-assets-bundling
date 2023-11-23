@@ -9,6 +9,8 @@ final class PreviewAssetDetailsViewModel: AssetDetailsViewModel {
     var viewState: AssetDetailsViewState = .loading
 
     func onViewAppeared() async {}
+    func onPlayVideoRequested() {}
+    func onShowDocumentRequested() {}
 }
 
 final class PreviewAssetListViewModel: AssetsListViewModel {

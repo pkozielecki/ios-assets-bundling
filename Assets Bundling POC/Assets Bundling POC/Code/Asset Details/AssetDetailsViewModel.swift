@@ -10,6 +10,8 @@ import Observation
 protocol AssetDetailsViewModel: Observable {
     var viewState: AssetDetailsViewState { get }
     func onViewAppeared() async
+    func onPlayVideoRequested()
+    func onShowDocumentRequested()
 }
 
 @Observable final class LiveAssetDetailsViewModel: AssetDetailsViewModel {
@@ -34,6 +36,20 @@ protocol AssetDetailsViewModel: Observable {
 
     func onViewAppeared() async {
         await unpackAssetIfNeeded()
+    }
+
+    func onPlayVideoRequested() {
+        guard case let .loaded(viewData) = viewState else {
+            return
+        }
+        router.push(route: .video(url: viewData.videoURL))
+    }
+
+    func onShowDocumentRequested() {
+        guard case let .loaded(viewData) = viewState else {
+            return
+        }
+        router.push(route: .document(url: viewData.documentURL))
     }
 }
 

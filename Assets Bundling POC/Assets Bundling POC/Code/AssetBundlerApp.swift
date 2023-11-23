@@ -7,6 +7,7 @@ import SwiftUI
 import NgNetworkModuleCore
 import ConcurrentNgNetworkModule
 import Assets_Bundling_POC_Commons
+import AVKit
 
 @main
 struct AssetBundlerApp: App {
@@ -41,6 +42,10 @@ struct AssetBundlerApp: App {
                                     assetStateManager: assetsManager
                                 )
                             )
+                        case let .video(url):
+                            VideoPlayer(player: AVPlayer(url: url))
+                        case let .document(url):
+                            PDFKitView(documentURL: url)
                         }
                     }
                     .sheet(

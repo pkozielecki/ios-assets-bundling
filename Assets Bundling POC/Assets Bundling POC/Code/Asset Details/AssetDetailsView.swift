@@ -11,7 +11,7 @@ struct AssetDetailsView: View {
     var body: some View {
         ZStack {
             if let assetData = assetData {
-                VStack {
+                ScrollView {
                     Spacer()
                         .frame(height: 30)
 
@@ -20,6 +20,10 @@ struct AssetDetailsView: View {
 
                     Text(assetData.subtitle.uppercased())
                         .font(.headline)
+                        .multilineTextAlignment(.center)
+
+                    Spacer()
+                        .frame(height: 20)
 
                     ZStack {
                         AsyncImage(
@@ -35,11 +39,14 @@ struct AssetDetailsView: View {
                         )
 
                         Button("Play video") {
-                            print("Button pressed!")
+                            viewModel.onPlayVideoRequested()
                         }
                         .buttonStyle(CapsuleActionButtonStyle())
                         .font(.largeTitle)
                     }
+
+                    Spacer()
+                        .frame(height: 20)
 
                     Text(assetData.description)
 
@@ -47,12 +54,10 @@ struct AssetDetailsView: View {
                         .frame(height: 30)
 
                     Button("Read more") {
-                        print("Button pressed!")
+                        viewModel.onShowDocumentRequested()
                     }
                     .buttonStyle(CapsuleActionButtonStyle())
                     .font(.footnote)
-
-                    Spacer()
                 }
                 .animation(/*@START_MENU_TOKEN@*/ .easeIn/*@END_MENU_TOKEN@*/, value: viewState)
                 .padding()
