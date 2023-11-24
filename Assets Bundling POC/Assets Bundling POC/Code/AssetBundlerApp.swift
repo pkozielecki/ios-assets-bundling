@@ -15,10 +15,12 @@ struct AssetBundlerApp: App {
     let router = LiveNavigationRouter()
     let networkModule: NetworkModule
     let assetsManager: AssetsManager
+    let odrManager: ODRManager
 
     init() {
         networkModule = NetworkingFactory.makeNetworkModule()
         assetsManager = LiveAssetsManager(manifestPath: AppConfiguration.manifestPath, networkModule: networkModule)
+        odrManager = LiveODRManager()
         model = LiveAssetsListViewModel(router: router, assetsProvider: assetsManager, assetsCleaner: assetsManager)
 
         Task { [assetsManager] in
@@ -39,7 +41,9 @@ struct AssetBundlerApp: App {
                                 viewModel: LiveAssetDetailsViewModel(
                                     selectedAsset: asset,
                                     router: router,
-                                    assetStateManager: assetsManager
+                                    assetStateManager: assetsManager,
+                                    assetsCleaner: assetsManager,
+                                    odrManager: odrManager
                                 )
                             )
                         case let .video(url):

@@ -11,6 +11,7 @@ final class PreviewAssetDetailsViewModel: AssetDetailsViewModel {
     func onViewAppeared() async {}
     func onPlayVideoRequested() {}
     func onShowDocumentRequested() {}
+    func onOpenWebsiteRequested() {}
 }
 
 final class PreviewAssetListViewModel: AssetsListViewModel {

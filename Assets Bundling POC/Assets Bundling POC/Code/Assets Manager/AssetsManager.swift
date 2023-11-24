@@ -21,7 +21,8 @@ protocol AssetStateManager: AnyObject {
 }
 
 protocol AssetsCleaner: AnyObject {
-    func clear() async
+    func clearAll() async
+    func clearCache(for assetID: String) async
 }
 
 protocol AssetsManager: AssetsProvider, AssetsCleaner, AssetStateManager {
@@ -80,7 +81,12 @@ final class LiveAssetsManager: NSObject, AssetsManager {
         currentAssetsSubject.send(assets)
     }
 
-    func clear() {
+    func clearCache(for assetID: String) async {
+        try? fileManager.removeItem(at: fileManager.sharedStorageAssetFile(for: assetID))
+        try? fileManager.removeItem(at: fileManager.permanentStorageAssetFile(for: assetID))
+    }
+
+    func clearAll() {
         try? storage.removeValue(forKey: StorageKeys.assets.rawValue)
 
         try? fileManager.removeItem(at: fileManager.sharedAssetsContainer)

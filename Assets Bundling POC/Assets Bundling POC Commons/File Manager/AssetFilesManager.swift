@@ -15,6 +15,7 @@ public protocol AssetFilesManager {
     func permanentStorageAssetFile(for assetID: String) -> URL
     func ephemeralStorageAssetFile(for assetID: String) -> URL
     func unpackedAssetFolder(for assetID: String) -> URL
+    func resourceURL(for assetID: String, of resourceType: ResourceType) -> URL
     func replaceItemAt(
         _ originalItemURL: URL,
         withItemAt newItemURL: URL,
@@ -79,6 +80,10 @@ extension FileManager: AssetFilesManager {
 
     public func unpackedAssetFolder(for assetID: String) -> URL {
         permanentAssetsContainer.appending(component: assetID, directoryHint: .isDirectory)
+    }
+
+    public func resourceURL(for assetID: String, of resourceType: ResourceType) -> URL {
+        unpackedAssetFolder(for: assetID).appendingPathComponent(resourceType.fileName)
     }
 
     public func folderExists(at url: URL) -> Bool {

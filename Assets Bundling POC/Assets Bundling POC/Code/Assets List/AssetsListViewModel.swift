@@ -20,6 +20,7 @@ protocol AssetsListViewModel: Observable {
 @Observable final class LiveAssetsListViewModel: AssetsListViewModel {
     private let assetsProvider: AssetsProvider
     private let assetsCleaner: AssetsCleaner
+
     private let router: NavigationRouter
 
     private(set) var viewState: AssetsListViewState = .loading
@@ -41,7 +42,7 @@ protocol AssetsListViewModel: Observable {
     @MainActor func onViewAppeared() {}
 
     func onAssetSelected(_ assetID: String) {
-        guard let asset = assets.filter({ $0.id == assetID }).first else {
+        guard let asset = assets.filter({ $0.id == assetID }).first, asset.state == .loaded else {
             return
         }
 
@@ -52,7 +53,7 @@ protocol AssetsListViewModel: Observable {
         // TODO: Show alert before continuing.
         Task { @MainActor [weak self] in
             self?.viewState = .noAssets
-            await self?.assetsCleaner.clear()
+            await self?.assetsCleaner.clearAll()
         }
     }
 

@@ -8,7 +8,8 @@ import Assets_Bundling_POC_Commons
 
 enum AssetDetailsViewState: Equatable {
     case loading
-    case loaded(ViewData)
+    case assetsLoaded(ViewData)
+    case ready(ViewData)
     case error
 }
 
@@ -20,5 +21,6 @@ extension AssetDetailsViewState {
         let imageURL: URL
         let videoURL: URL
         let documentURL: URL
+        let websiteURL: URL
     }
 }
