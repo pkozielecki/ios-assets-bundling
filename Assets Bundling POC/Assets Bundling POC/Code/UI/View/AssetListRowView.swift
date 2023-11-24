@@ -11,7 +11,6 @@ struct AssetListRowView: View {
     var thumbnailHeight = 30.0
 
     var body: some View {
-        // TODO: Move to separate view.
         HStack {
             switch data.state {
             case .loaded:
@@ -37,6 +36,5 @@ struct AssetListRowView: View {
                 .listRowSeparator(.hidden)
                 .tint(.primary)
         }
-        .animation(.easeIn, value: data.state)
     }
 }

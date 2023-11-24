@@ -10,6 +10,9 @@ struct AssetsListView: View {
 
     var body: some View {
         ZStack {
+
+            // MARK: List with assets
+
             List {
                 Section(header: makeSectionHeader()) {
                     ForEach(assets, id: \.self) { data in
@@ -22,15 +25,27 @@ struct AssetsListView: View {
                 }
             }
             .listStyle(.grouped)
+            .opacity(assets.isEmpty ? 0.5 : 1)
+            .refreshable {
+                viewModel.onReloadRequested()
+            }
 
-            if !isHidden {
-                Button {
-                    viewModel.onReloadRequested()
-                } label: {
-                    Text("No assets loaded\nTap to reload")
-                        .font(.title)
-                }
-                .animation(.easeIn, value: isHidden)
+            // MARK: Reload button
+
+            Button {
+                viewModel.onReloadRequested()
+            } label: {
+                Text("No assets loaded\nTap to reload")
+                    .font(.title)
+            }
+            .opacity(shouldShowReloadButton ? 1 : 0)
+            .animation(.easeIn, value: viewState)
+
+            // MARK: Loading indicator
+
+            if isLoading {
+                LoaderView(configuration: .default)
+                    .animation(.easeIn, value: viewState)
             }
         }
         .onAppear {
@@ -41,11 +56,16 @@ struct AssetsListView: View {
 
 private extension AssetsListView {
 
-    var isHidden: Bool {
-        if case .noAssets = viewModel.viewState {
-            return false
-        }
-        return true
+    var viewState: AssetsListViewState {
+        viewModel.viewState
+    }
+
+    var isLoading: Bool {
+        viewState == .loading
+    }
+
+    var shouldShowReloadButton: Bool {
+        assets.isEmpty && !isLoading
     }
 
     var assets: [AssetListViewRowData] {
@@ -64,6 +84,7 @@ private extension AssetsListView {
             } label: {
                 Image(systemName: "clear.fill")
             }
+            .opacity(shouldShowReloadButton ? 0 : 1)
         }
     }
 }
@@ -78,5 +99,7 @@ private extension AssetsListView {
         .init(id: "ert", state: .toBeTransferred, name: "asset5")
     ]
     model.viewState = .loaded(assetsListRows: assetListRows)
+//    model.viewState = .loading
+//    model.viewState = .noAssets
     return AssetsListView(viewModel: model)
 }

@@ -35,14 +35,14 @@ struct AssetDetailsView: View {
                     message: "Please try re-downloading the asset",
                     onFixBrokenAssetRequested: viewModel.onFixBrokenAssetRequested
                 )
-                .animation(/*@START_MENU_TOKEN@*/ .easeIn/*@END_MENU_TOKEN@*/, value: viewState)
+                .animation(.easeIn, value: viewState)
             }
 
             // MARK: Loading indicator
 
             if isLoading {
                 LoaderView(configuration: .default)
-                    .animation(/*@START_MENU_TOKEN@*/ .easeIn/*@END_MENU_TOKEN@*/, value: viewState)
+                    .animation(.easeIn, value: viewState)
             }
         }
         .onAppear {
