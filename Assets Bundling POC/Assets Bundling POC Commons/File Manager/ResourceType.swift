@@ -21,9 +21,9 @@ extension ResourceType {
         case .video:
             "video.mov"
         case .website:
-            "document.pdf"
-        case .document:
             "index.html"
+        case .document:
+            "document.pdf"
         }
     }
 }

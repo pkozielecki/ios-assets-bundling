@@ -50,6 +50,8 @@ struct AssetBundlerApp: App {
                             VideoPlayer(player: AVPlayer(url: url))
                         case let .document(url):
                             PDFKitView(documentURL: url)
+                        case let .website(url):
+                            WebView(url: url)
                         }
                     }
                     .sheet(

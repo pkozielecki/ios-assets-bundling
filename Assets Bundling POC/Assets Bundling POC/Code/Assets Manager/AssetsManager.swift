@@ -84,6 +84,7 @@ final class LiveAssetsManager: NSObject, AssetsManager {
     func clearCache(for assetID: String) async {
         try? fileManager.removeItem(at: fileManager.sharedStorageAssetFile(for: assetID))
         try? fileManager.removeItem(at: fileManager.permanentStorageAssetFile(for: assetID))
+        try? fileManager.removeItem(at: fileManager.unpackedAssetFolder(for: assetID))
     }
 
     func clearAll() {

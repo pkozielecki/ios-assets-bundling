@@ -10,78 +10,32 @@ struct AssetDetailsView: View {
 
     var body: some View {
         ZStack {
+
+            // MARK: Asset info section
+
             if let assetData = assetData {
                 ScrollView {
-                    Spacer()
-                        .frame(height: 30)
-
-                    // MARK: Title
-
-                    Text(assetData.title.uppercased())
-                        .font(.largeTitle)
-
-                    // MARK: Subtitle
-
-                    Text(assetData.subtitle.uppercased())
-                        .font(.headline)
-                        .multilineTextAlignment(.center)
-
-                    Spacer()
-                        .frame(height: 20)
-
-                    // MARK: Image
-
-                    ZStack {
-                        AsyncImage(
-                            url: assetData.imageURL,
-                            content: { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            },
-                            placeholder: {
-                                ProgressView()
-                            }
-                        )
-
-                        Button("Play video") {
-                            viewModel.onPlayVideoRequested()
-                        }
-                        .buttonStyle(CapsuleActionButtonStyle())
-                        .font(.largeTitle)
-                    }
-
-                    Spacer()
-                        .frame(height: 20)
-
-                    // MARK: Open website button
-
-                    Button("Open website") {
-                        viewModel.onOpenWebsiteRequested()
-                    }
-                    .buttonStyle(CapsuleActionButtonStyle())
-                    .font(.title2)
-
-                    Spacer()
-                        .frame(height: 20)
-
-                    // MARK: Asset description
-
-                    Text(assetData.description)
-
-                    Spacer()
-                        .frame(height: 30)
-
-                    // MARK: Read more button
-
-                    Button("Read more") {
-                        viewModel.onShowDocumentRequested()
-                    }
-                    .buttonStyle(CapsuleActionButtonStyle())
-                    .font(.footnote)
+                    AssetInfoView(
+                        assetData: assetData,
+                        hasODRdownloaded: isODRdownloaded,
+                        onPlayVideoRequested: viewModel.onPlayVideoRequested,
+                        onShowDocumentRequested: viewModel.onShowDocumentRequested,
+                        onOpenWebsiteRequested: viewModel.onOpenWebsiteRequested
+                    )
                 }
                 .animation(.easeIn, value: viewState)
                 .padding()
+            }
+
+            // MARK: Error view:
+
+            if hasError {
+                AssetErrorView(
+                    title: "An error has occurred",
+                    message: "Please try re-downloading the asset",
+                    onFixBrokenAssetRequested: viewModel.onFixBrokenAssetRequested
+                )
+                .animation(/*@START_MENU_TOKEN@*/ .easeIn/*@END_MENU_TOKEN@*/, value: viewState)
             }
 
             // MARK: Loading indicator
@@ -113,6 +67,13 @@ private extension AssetDetailsView {
         viewState == .error
     }
 
+    var isODRdownloaded: Bool {
+        if case .ready = viewState {
+            return true
+        }
+        return false
+    }
+
     var assetData: AssetDetailsViewState.ViewData? {
         switch viewState {
         case let .assetsLoaded(assetData), let .ready(assetData):
@@ -127,6 +88,7 @@ private extension AssetDetailsView {
     let model = PreviewAssetDetailsViewModel()
     let imagePath = Bundle.main.path(forResource: "preview-asset-image", ofType: "jpg") ?? ""
     model.viewState = .ready(
+//    model.viewState = .assetsLoaded(
         .init(
             title: "Fake asset title",
             subtitle: "Asset XYZ,\ncreated 10.10.2023",
@@ -137,5 +99,7 @@ private extension AssetDetailsView {
             websiteURL: URL(string: "http://wp.pl")!
         )
     )
+//    model.viewState = .error
+//    model.viewState = .loading
     return AssetDetailsView(viewModel: model)
 }

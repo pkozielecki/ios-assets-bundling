@@ -14,6 +14,7 @@ protocol AssetDetailsViewModel: Observable {
     func onPlayVideoRequested()
     func onShowDocumentRequested()
     func onOpenWebsiteRequested()
+    func onFixBrokenAssetRequested() async
 }
 
 @Observable final class LiveAssetDetailsViewModel: AssetDetailsViewModel {
@@ -25,6 +26,8 @@ protocol AssetDetailsViewModel: Observable {
     private let fileManager: AssetFilesManager
 
     private(set) var viewState: AssetDetailsViewState = .loading
+    private var assetUnpackingSucceeded = true
+    private var odrUnpackingSucceeded = true
 
     init(
         selectedAsset: AssetData,
@@ -57,22 +60,27 @@ protocol AssetDetailsViewModel: Observable {
 
     func onShowDocumentRequested() {
         if assetsUnpacked {
-            router.push(route: .video(url: fileManager.resourceURL(for: assetID, of: .document)))
+            router.push(route: .document(url: fileManager.resourceURL(for: assetID, of: .document)))
         }
     }
 
     func onOpenWebsiteRequested() {
         if assetsUnpacked, odrUnpacked {
-            // TODO: Open website
-            print("Open website")
+            router.push(route: .website(url: fileManager.resourceURL(for: assetID, of: .website)))
         }
+    }
+
+    @MainActor func onFixBrokenAssetRequested() async {
+        viewState = .loading
+        await assetsCleaner.clearCache(for: assetID)
+        router.pop()
     }
 }
 
 private extension LiveAssetDetailsViewModel {
 
-    @MainActor func composeViewState() -> AssetDetailsViewState {
-        guard selectedAsset.state == .loaded else {
+    func composeViewState() -> AssetDetailsViewState {
+        guard selectedAsset.state == .loaded, assetUnpackingSucceeded, odrUnpackingSucceeded else {
             return .error
         }
 
@@ -90,7 +98,8 @@ private extension LiveAssetDetailsViewModel {
 
     func unpackAssetIfNeeded() async {
         guard !fileManager.fileExists(atPath: imageFileURL.path) else {
-            viewState = await composeViewState()
+            assetUnpackingSucceeded = true
+            await refreshViewState()
             return
         }
 
@@ -99,43 +108,52 @@ private extension LiveAssetDetailsViewModel {
 
         let assetURL = fileManager.permanentStorageAssetFile(for: assetID)
         do {
-            // Discussion: This is happening on bg thread and `composeViewState()` is annotated by @MainActor.
+            // Discussion: This is happening on bg thread - UI should not be affected.
             try fileManager.unzipItem(at: assetURL, to: assetDirectoryURL, skipCRC32: false, progress: nil, pathEncoding: nil)
-            viewState = await composeViewState()
+            assetUnpackingSucceeded = true
+            await refreshViewState()
         } catch {
             Logger.app.error("📱🔴Failed to unzip asset: \(error, privacy: .public)")
+            assetUnpackingSucceeded = false
             await handleFailure()
         }
     }
 
     func fetchAndUnpackODRifNeeded() async {
         guard !fileManager.fileExists(atPath: websiteFileURL.path) else {
-            viewState = await composeViewState()
+            odrUnpackingSucceeded = true
+            await refreshViewState()
             return
         }
 
         let pack = ODRPack(id: assetID, priority: 0.5)
         do {
+            // Discussion: This is happening on bg thread - UI should not be affected.
             try await odrManager.fetchResourcesPack(pack)
             if let odrURL = Bundle.main.url(forResource: assetID, withExtension: "zip") {
                 let assetDirectoryURL = fileManager.unpackedAssetFolder(for: assetID)
                 try fileManager.unzipItem(at: odrURL, to: assetDirectoryURL, skipCRC32: false, progress: nil, pathEncoding: nil)
+                odrUnpackingSucceeded = true
+                await refreshViewState()
             } else {
-                Logger.app.error("📱🔴Failed to find ODR pack: \(self.assetID, privacy: .public)")
+                Logger.app.error("📱🔴Failed to find ODR pack")
+                odrUnpackingSucceeded = false
                 await handleFailure()
             }
         } catch {
             Logger.app.error("📱🔴Failed to fetch ODR pack: \(error, privacy: .public)")
+            odrUnpackingSucceeded = false
             await handleFailure()
         }
     }
 
     func handleFailure() async {
         assetStateManager.updateAssetState(assetID: assetID, newState: .failed)
-        await assetsCleaner.clearCache(for: assetID)
-        Task { @MainActor in
-            viewState = .error
-        }
+        await refreshViewState()
+    }
+
+    @MainActor func refreshViewState() {
+        viewState = composeViewState()
     }
 
     func composeViewData() -> AssetDetailsViewState.ViewData {
