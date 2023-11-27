@@ -31,9 +31,9 @@
 		2A5A630A2AF8E5200081D404 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */; };
 		2A76B6582B10AB9200E7D2A2 /* AssetInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A76B6572B10AB9200E7D2A2 /* AssetInfoView.swift */; };
 		2A76B65A2B10AECE00E7D2A2 /* AssetErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A76B6592B10AECE00E7D2A2 /* AssetErrorView.swift */; };
-		2A8F48E42B10E77800BA8823 /* package2.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E12B10E77700BA8823 /* package2.zip */; settings = {ASSET_TAGS = (package2, ); }; };
-		2A8F48E52B10E77800BA8823 /* package1.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E22B10E77700BA8823 /* package1.zip */; settings = {ASSET_TAGS = (package1, ); }; };
-		2A8F48E62B10E77800BA8823 /* package3.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E32B10E77800BA8823 /* package3.zip */; settings = {ASSET_TAGS = (package3, ); }; };
+		2A8F48E42B10E77800BA8823 /* package2.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E12B10E77700BA8823 /* package2.zip */; settings = {ASSET_TAGS = ("odr-package2", ); }; };
+		2A8F48E52B10E77800BA8823 /* package1.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E22B10E77700BA8823 /* package1.zip */; settings = {ASSET_TAGS = ("odr-package1", ); }; };
+		2A8F48E62B10E77800BA8823 /* package3.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E32B10E77800BA8823 /* package3.zip */; settings = {ASSET_TAGS = ("odr-package3", ); }; };
 		2AD6B0182B0DE0BD000A4075 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2AD6B0172B0DE0BD000A4075 /* ZIPFoundation */; };
 		2AD6B01A2B0E0038000A4075 /* PreviewViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B0192B0E0038000A4075 /* PreviewViewModels.swift */; };
 		2AD6B01E2B0E133A000A4075 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B01D2B0E133A000A4075 /* ButtonStyles.swift */; };
@@ -650,9 +650,9 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				KnownAssetTags = (
-					package1,
-					package2,
-					package3,
+					"odr-package1",
+					"odr-package2",
+					"odr-package3",
 				);
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;

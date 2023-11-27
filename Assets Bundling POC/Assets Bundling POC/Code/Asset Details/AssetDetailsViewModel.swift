@@ -110,6 +110,7 @@ private extension LiveAssetDetailsViewModel {
         do {
             // Discussion: This is happening on bg thread - UI should not be affected.
             try fileManager.unzipItem(at: assetURL, to: assetDirectoryURL, skipCRC32: false, progress: nil, pathEncoding: nil)
+            try fileManager.removeItem(at: assetURL)
             assetUnpackingSucceeded = true
             await refreshViewState()
         } catch {
@@ -126,7 +127,7 @@ private extension LiveAssetDetailsViewModel {
             return
         }
 
-        let pack = ODRPack(id: assetID, priority: 0.5)
+        let pack = ODRPack(id: "odr-\(assetID)", priority: 0.5)
         do {
             // Discussion: This is happening on bg thread - UI should not be affected.
             try await odrManager.fetchResourcesPack(pack)
