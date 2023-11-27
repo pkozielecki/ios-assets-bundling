@@ -47,7 +47,11 @@ struct AssetBundlerApp: App {
                                 )
                             )
                         case let .video(url):
-                            VideoPlayer(player: AVPlayer(url: url))
+                            let player = AVPlayer(url: url)
+                            VideoPlayer(player: player)
+                                .onAppear {
+                                    player.play()
+                                }
                         case let .document(url):
                             PDFKitView(documentURL: url)
                         case let .website(url):
