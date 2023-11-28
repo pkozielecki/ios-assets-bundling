@@ -23,10 +23,10 @@
 		2A2C38762B035C9D0008DFD8 /* ConcurrentNgNetworkModule in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C38752B035C9D0008DFD8 /* ConcurrentNgNetworkModule */; };
 		2A2C38782B035C9D0008DFD8 /* NgNetworkModuleCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C38772B035C9D0008DFD8 /* NgNetworkModuleCore */; };
 		2A2C38792B035C9D0008DFD8 /* Assets_Bundling_POC_Commons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2C38672B035AA20008DFD8 /* Assets_Bundling_POC_Commons.framework */; };
-		2A2C387A2B035C9D0008DFD8 /* Assets_Bundling_POC_Commons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2C38672B035AA20008DFD8 /* Assets_Bundling_POC_Commons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2A2C387F2B064F610008DFD8 /* ConcurrentNgNetworkModule in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C387E2B064F600008DFD8 /* ConcurrentNgNetworkModule */; };
 		2A2C38812B064F610008DFD8 /* NgNetworkModuleCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C38802B064F610008DFD8 /* NgNetworkModuleCore */; };
 		2A2C38822B07403D0008DFD8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187CDA766D96B47DBED292 /* Logger.swift */; };
+		2A35F00F2B15EC5C008F0AAC /* PreviewViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B0192B0E0038000A4075 /* PreviewViewModels.swift */; };
 		2A5A63072AF8E5200081D404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63062AF8E5200081D404 /* Assets.xcassets */; };
 		2A5A630A2AF8E5200081D404 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */; };
 		2A76B6582B10AB9200E7D2A2 /* AssetInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A76B6572B10AB9200E7D2A2 /* AssetInfoView.swift */; };
@@ -35,7 +35,6 @@
 		2A8F48E52B10E77800BA8823 /* package1.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E22B10E77700BA8823 /* package1.zip */; settings = {ASSET_TAGS = ("odr-package1", ); }; };
 		2A8F48E62B10E77800BA8823 /* package3.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E32B10E77800BA8823 /* package3.zip */; settings = {ASSET_TAGS = ("odr-package3", ); }; };
 		2AD6B0182B0DE0BD000A4075 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2AD6B0172B0DE0BD000A4075 /* ZIPFoundation */; };
-		2AD6B01A2B0E0038000A4075 /* PreviewViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B0192B0E0038000A4075 /* PreviewViewModels.swift */; };
 		2AD6B01E2B0E133A000A4075 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B01D2B0E133A000A4075 /* ButtonStyles.swift */; };
 		E8187035D2DB83343DDFB344 /* AssetDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81872858D3CB688FD10A5FC /* AssetDataExtension.swift */; };
 		E818707B71FA2790C6CA1DF5 /* AssetBundlerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818795C6F2644617D500188 /* AssetBundlerApp.swift */; };
@@ -119,17 +118,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2A2C387D2B035C9D0008DFD8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2A2C387A2B035C9D0008DFD8 /* Assets_Bundling_POC_Commons.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -138,7 +126,6 @@
 		2A2C38232AFA20BE0008DFD8 /* AlertRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertRoute.swift; sourceTree = "<group>"; };
 		2A2C38252AFA210E0008DFD8 /* NavigationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoute.swift; sourceTree = "<group>"; };
 		2A2C38272AFB73590008DFD8 /* Assets Bundling POC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Assets Bundling POC.entitlements"; sourceTree = "<group>"; };
-		2A2C38282AFB73AA0008DFD8 /* Assets-Bundling-POC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Assets-Bundling-POC-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2A2C38322AFE33AC0008DFD8 /* Assets Downloader Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "Assets Downloader Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A2C38342AFE33AC0008DFD8 /* AssetsDownloaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsDownloaderExtension.swift; sourceTree = "<group>"; };
 		2A2C38362AFE33AC0008DFD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -146,6 +133,7 @@
 		2A2C38672B035AA20008DFD8 /* Assets_Bundling_POC_Commons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Assets_Bundling_POC_Commons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A2C38692B035AA20008DFD8 /* Assets_Bundling_POC_Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assets_Bundling_POC_Commons.h; sourceTree = "<group>"; };
 		2A2C38732B035BC70008DFD8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2A35F0102B15EDB8008F0AAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A5A62FF2AF8E51E0081D404 /* AssetsBundlePOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssetsBundlePOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A63062AF8E5200081D404 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -312,7 +300,7 @@
 		2A5A63012AF8E51E0081D404 /* Assets Bundling POC */ = {
 			isa = PBXGroup;
 			children = (
-				2A2C38282AFB73AA0008DFD8 /* Assets-Bundling-POC-Info.plist */,
+				2A35F0102B15EDB8008F0AAC /* Info.plist */,
 				2A2C38272AFB73590008DFD8 /* Assets Bundling POC.entitlements */,
 				2A5A63062AF8E5200081D404 /* Assets.xcassets */,
 				2A5A63082AF8E5200081D404 /* Preview Content */,
@@ -577,7 +565,6 @@
 				2A2C382E2AFE33AC0008DFD8 /* Sources */,
 				2A2C382F2AFE33AC0008DFD8 /* Frameworks */,
 				2A2C38302AFE33AC0008DFD8 /* Resources */,
-				2A2C387D2B035C9D0008DFD8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -765,8 +752,8 @@
 				E818784EE5AA4402FE6013EA /* AssetsListView.swift in Sources */,
 				2A76B65A2B10AECE00E7D2A2 /* AssetErrorView.swift in Sources */,
 				2A2C381F2AFA20060008DFD8 /* NavigationRouter.swift in Sources */,
-				2AD6B01A2B0E0038000A4075 /* PreviewViewModels.swift in Sources */,
 				2A2C38222AFA209A0008DFD8 /* PopupRoute.swift in Sources */,
+				2A35F00F2B15EC5C008F0AAC /* PreviewViewModels.swift in Sources */,
 				E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */,
 				E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */,
 				E81879655FF71FC397101BED /* AssetsManager.swift in Sources */,
@@ -847,7 +834,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Assets Bundling POC Extension/Assets Downloader.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -865,7 +852,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.whitehatgaming.Assets-Bundling-POC.Assets-Downloader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "POC Assets Bundling - Downloader Extension Dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "POC Assets Bundling - Downloader Extension AppStor";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1086,7 +1073,7 @@
 				ENABLE_ON_DEMAND_RESOURCES = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Assets-Bundling-POC-Info.plist";
+				INFOPLIST_FILE = "Assets Bundling POC/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AssetsBundlingPOC;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1127,7 +1114,7 @@
 				ENABLE_ON_DEMAND_RESOURCES = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Assets-Bundling-POC-Info.plist";
+				INFOPLIST_FILE = "Assets Bundling POC/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AssetsBundlingPOC;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
