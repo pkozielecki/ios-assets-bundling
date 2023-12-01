@@ -23,6 +23,10 @@ public protocol BAWrapper: AnyObject {
     /// Fetches all current downloads.
     /// - SeeAlso: `BADownloadManager.fetchCurrentDownloads()`
     func fetchCurrentDownloads() throws -> [BADownload]
+
+    /// Schedules download of given asset.
+    /// - SeeAlso: `BADownloadManager.scheduleDownload(_:)`
+    func scheduleDownload(_ download: BADownload) throws
 }
 
 extension BADownloadManager: BAWrapper {}

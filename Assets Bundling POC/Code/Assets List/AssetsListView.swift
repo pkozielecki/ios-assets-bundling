@@ -89,6 +89,7 @@ private extension AssetsListView {
     }
 }
 
+#if DEBUG
 #Preview {
     let model = PreviewAssetListViewModel()
     let assetListRows: [AssetListViewRowData] = [
@@ -103,3 +104,4 @@ private extension AssetsListView {
 //    model.viewState = .noAssets
     return AssetsListView(viewModel: model)
 }
+#endif

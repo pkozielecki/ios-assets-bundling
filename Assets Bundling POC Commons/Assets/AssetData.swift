@@ -8,6 +8,7 @@ import BackgroundAssets
 
 public struct AssetData: Equatable, Hashable, Codable {
     public let id: String
+    public let essential: Bool
     public let name: String
     public let description: String
     public let state: State
@@ -15,8 +16,9 @@ public struct AssetData: Equatable, Hashable, Codable {
     public let size: Int
     public let remoteURL: URL?
 
-    public init(id: String, name: String, description: String, state: State, created: Double, size: Int, remoteURL: URL?) {
+    public init(id: String, essential: Bool, name: String, description: String, state: State, created: Double, size: Int, remoteURL: URL?) {
         self.id = id
+        self.essential = essential
         self.name = name
         self.description = description
         self.state = state
@@ -36,9 +38,10 @@ extension AssetData {
         case failed
     }
 
-    public init(from package: ManifestPackage) {
+    public init(from package: ManifestPackage, essentialDownloadsPermitted: Bool) {
         self.init(
             id: package.id,
+            essential: package.essential && essentialDownloadsPermitted,
             name: package.name,
             description: package.description,
             state: .notLoaded, // Discussion: Package download is not started yet.
@@ -56,7 +59,7 @@ extension AssetData {
         return BAURLDownload(
             identifier: id,
             request: URLRequest(url: remoteURL),
-            essential: false, // TODO: Change when there are essential downloads.
+            essential: essential,
             fileSize: size,
             applicationGroupIdentifier: AppConfiguration.appBundleGroup,
             priority: .default
@@ -70,6 +73,7 @@ extension AssetData {
     public func changingState(_ newState: State) -> AssetData {
         AssetData(
             id: id,
+            essential: essential,
             name: name,
             description: description,
             state: newState,

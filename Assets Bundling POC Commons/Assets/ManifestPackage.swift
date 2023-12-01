@@ -8,6 +8,7 @@ import BackgroundAssets
 
 public struct ManifestPackage: Codable {
     public let id: String
+    public let essential: Bool
     public let name: String
     public let description: String
     public let path: String
@@ -29,7 +30,7 @@ extension ManifestPackage {
         BAURLDownload(
             identifier: id,
             request: URLRequest(url: url!),
-            essential: false, // TODO: Change when there are essential downloads.
+            essential: essential,
             fileSize: size,
             applicationGroupIdentifier: AppConfiguration.appBundleGroup,
             priority: .default

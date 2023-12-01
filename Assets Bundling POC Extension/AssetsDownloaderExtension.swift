@@ -29,9 +29,14 @@ class AssetsDownloaderExtension: BADownloaderExtension {
 
     func downloads(for request: BAContentRequest, manifestURL: URL, extensionInfo: BAAppExtensionInfo) -> Set<BADownload> {
         // Discussion: At this moment, the manifest is already downloaded and stored locally.
+        let essentialDownloadsPermitted = request == .install || request == .update
         let manifestPackages = manifestURL.getManifestPackage()
         let storedAssets = storage.readAssetsFromStorage()
-        let currentAssets = currentAssetsComposer.compose(storedAssets: storedAssets, manifestPackages: manifestPackages)
+        let currentAssets = currentAssetsComposer.compose(
+                storedAssets: storedAssets,
+                manifestPackages: manifestPackages,
+                essentialDownloadsPermitted: essentialDownloadsPermitted
+        )
 
         assets = currentAssets.allAssets
 
@@ -47,7 +52,7 @@ class AssetsDownloaderExtension: BADownloaderExtension {
         // Discussion: Need to assert exclusive control as the app might be modifying assets state at the same time.
         downloadManager.withExclusiveControl { [weak self] lockAcquired, error in
             guard let self, lockAcquired else {
-                Logger.app.error("🤖🔴Failed to acquire lock or object deallocated: \(error, privacy: .public)")
+                Logger.ext.error("🤖🔴Failed to acquire lock or object deallocated: \(error, privacy: .public)")
                 return
             }
 
@@ -56,16 +61,26 @@ class AssetsDownloaderExtension: BADownloaderExtension {
     }
 
     func backgroundDownload(_ failedDownload: BADownload, failedWithError error: Error) {
-        // Discussion: Need to assert exclusive control as the app might be modifying assets state at the same time.
-        downloadManager.withExclusiveControl { [weak self] lockAcquired, error in
-            guard let self, lockAcquired else {
-                Logger.app.error("🤖🔴Failed to acquire lock or object deallocated: \(error, privacy: .public)")
-                return
-            }
+        // Discussion: If the manifest fails to download, it'll also be handled here.
+        guard type(of: failedDownload) == BAURLDownload.self else {
+            Logger.ext.warning("Download of unsupported type failed: \(failedDownload.identifier). \(error)")
+            return
+        }
+        
+        if failedDownload.isEssential {
+            Logger.ext.log("🤖🟠Rescheduling failed download: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
+            rescheduleFailedEssentialDownload(failedDownload: failedDownload)
+        } else {
+            // Discussion: Need to assert exclusive control as the app might be modifying assets state at the same time.
+            downloadManager.withExclusiveControl { [weak self] lockAcquired, error in
+                guard let self, lockAcquired else {
+                    Logger.ext.error("🤖🔴Failed to acquire lock or object deallocated: \(error, privacy: .public)")
+                    return
+                }
 
-            Logger.ext.log("🤖🔴Loading failed: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
-            updateAssetState(assetID: failedDownload.identifier, newState: .failed)
-            // TODO: Schedule failed, essential download
+                Logger.ext.log("🤖🔴Loading failed: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
+                updateAssetState(assetID: failedDownload.identifier, newState: .failed)
+            }
         }
     }
 
@@ -89,6 +104,15 @@ private extension AssetsDownloaderExtension {
             // Discussion: If the file failed to move, it'll have to be re-downloaded.
             Logger.ext.error("🤖🔴Failed to move downloaded file \(tempFileURL.absoluteString, privacy: .public) \(targetURL.absoluteString, privacy: .public), error: \(error, privacy: .public)")
             return
+        }
+    }
+
+    func rescheduleFailedEssentialDownload(failedDownload: BADownload) {
+        do {
+            let optionalDownload = failedDownload.removingEssential()
+            try downloadManager.scheduleDownload(optionalDownload)
+        } catch {
+            Logger.ext.warning("Failed to reschedule download \(failedDownload.identifier). \(error)")
         }
     }
 

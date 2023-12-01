@@ -26,9 +26,9 @@
 		2A2C387F2B064F610008DFD8 /* ConcurrentNgNetworkModule in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C387E2B064F600008DFD8 /* ConcurrentNgNetworkModule */; };
 		2A2C38812B064F610008DFD8 /* NgNetworkModuleCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2C38802B064F610008DFD8 /* NgNetworkModuleCore */; };
 		2A2C38822B07403D0008DFD8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8187CDA766D96B47DBED292 /* Logger.swift */; };
-		2A35F00F2B15EC5C008F0AAC /* PreviewViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B0192B0E0038000A4075 /* PreviewViewModels.swift */; };
 		2A5A63072AF8E5200081D404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63062AF8E5200081D404 /* Assets.xcassets */; };
 		2A5A630A2AF8E5200081D404 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A63092AF8E5200081D404 /* Preview Assets.xcassets */; };
+		2A6DE35D2B18C00F00E58FC4 /* PreviewViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B0192B0E0038000A4075 /* PreviewViewModels.swift */; };
 		2A76B6582B10AB9200E7D2A2 /* AssetInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A76B6572B10AB9200E7D2A2 /* AssetInfoView.swift */; };
 		2A76B65A2B10AECE00E7D2A2 /* AssetErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A76B6592B10AECE00E7D2A2 /* AssetErrorView.swift */; };
 		2A8F48E42B10E77800BA8823 /* package2.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E12B10E77700BA8823 /* package2.zip */; settings = {ASSET_TAGS = ("odr-package2", ); }; };
@@ -36,6 +36,7 @@
 		2A8F48E62B10E77800BA8823 /* package3.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F48E32B10E77800BA8823 /* package3.zip */; settings = {ASSET_TAGS = ("odr-package3", ); }; };
 		2AD6B0182B0DE0BD000A4075 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2AD6B0172B0DE0BD000A4075 /* ZIPFoundation */; };
 		2AD6B01E2B0E133A000A4075 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD6B01D2B0E133A000A4075 /* ButtonStyles.swift */; };
+		2AE1A6332B177EE700B7F491 /* package4.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2AE1A6322B177EE100B7F491 /* package4.zip */; settings = {ASSET_TAGS = ("odr-package4", ); }; };
 		E8187035D2DB83343DDFB344 /* AssetDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81872858D3CB688FD10A5FC /* AssetDataExtension.swift */; };
 		E818707B71FA2790C6CA1DF5 /* AssetBundlerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818795C6F2644617D500188 /* AssetBundlerApp.swift */; };
 		E81870E8439F6247529451FC /* Int + Calculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818797E09E95465FF2A5304 /* Int + Calculations.swift */; };
@@ -145,6 +146,7 @@
 		2AD6B0192B0E0038000A4075 /* PreviewViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewModels.swift; sourceTree = "<group>"; };
 		2AD6B01B2B0E0E23000A4075 /* preview-asset-image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "preview-asset-image.jpg"; sourceTree = "<group>"; };
 		2AD6B01D2B0E133A000A4075 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		2AE1A6322B177EE100B7F491 /* package4.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package4.zip; sourceTree = "<group>"; };
 		E81870290634DE22FE3E54F5 /* AssetsListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsListViewModel.swift; sourceTree = "<group>"; };
 		E81871717B6D6CEF76D56CAF /* AssetListRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetListRowView.swift; sourceTree = "<group>"; };
 		E81871D36E5037F39026E8BC /* CurrentAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentAssets.swift; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 		E8187A3BCA21EECFB1913194 /* ODR */ = {
 			isa = PBXGroup;
 			children = (
+				2AE1A6322B177EE100B7F491 /* package4.zip */,
 				2A8F48E22B10E77700BA8823 /* package1.zip */,
 				2A8F48E12B10E77700BA8823 /* package2.zip */,
 				2A8F48E32B10E77800BA8823 /* package3.zip */,
@@ -640,6 +643,7 @@
 					"odr-package1",
 					"odr-package2",
 					"odr-package3",
+					"odr-package4",
 				);
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
@@ -705,6 +709,7 @@
 				2A5A63072AF8E5200081D404 /* Assets.xcassets in Resources */,
 				2A8F48E52B10E77800BA8823 /* package1.zip in Resources */,
 				2A8F48E42B10E77800BA8823 /* package2.zip in Resources */,
+				2AE1A6332B177EE700B7F491 /* package4.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,7 +758,7 @@
 				2A76B65A2B10AECE00E7D2A2 /* AssetErrorView.swift in Sources */,
 				2A2C381F2AFA20060008DFD8 /* NavigationRouter.swift in Sources */,
 				2A2C38222AFA209A0008DFD8 /* PopupRoute.swift in Sources */,
-				2A35F00F2B15EC5C008F0AAC /* PreviewViewModels.swift in Sources */,
+				2A6DE35D2B18C00F00E58FC4 /* PreviewViewModels.swift in Sources */,
 				E81871D638B41A8FAD96006B /* AssetsListViewModel.swift in Sources */,
 				E8187A65FA844C6781510407 /* AssetsListViewState.swift in Sources */,
 				E81879655FF71FC397101BED /* AssetsManager.swift in Sources */,

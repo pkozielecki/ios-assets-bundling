@@ -2,27 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>AppGroupIdentifier</key>
 	<string>group.com.whitehatgaming.Assets-Bundling-POC</string>
 	<key>BAManifestURL</key>
 	<string>https://lxruxq.am.files.1drv.com/y4mTPzC8FY3YPpLt56tgpMYGJoIzC5G9BZfH6v66K00ttM6l1c7PUIQrIFEiR9Q7vPRibEzM6nXN4Bx0Y5TNVKh26aXOXRk4ErOp3mwQSybijyuddiozj0cGFAV4xMxIRRDeEfHfKo6SULIqxEnZsepF9HJMf6UcNXo8OlzqGkfoyqiUbpe5NKjNHMBim3TbchFYotcWCQr5_iBRBsn0hqqgA</string>
 	<key>BAEssentialMaxInstallSize</key>
-	<integer>0</integer>
+	<integer>35000000</integer>
 	<key>BAMaxInstallSize</key>
-	<integer>311832388</integer>
+	<integer>351832388</integer>
 	<key>BAInitialDownloadRestrictions</key>
 	<dict>
 		<key>BADownloadAllowance</key>
-		<integer>311831236</integer>
+		<integer>351831236</integer>
 		<key>BADownloadDomainAllowList</key>
 		<array>
+			<string>lnraxq.am.files.1drv.com</string>
 			<string>lxrgxq.am.files.1drv.com</string>
 			<string>lxrfxq.am.files.1drv.com</string>
 			<string>lxrwxq.am.files.1drv.com</string>
 			<string>lxruxq.am.files.1drv.com</string>
 		</array>
 		<key>BAEssentialDownloadAllowance</key>
-		<integer>0</integer>
+		<integer>35000000</integer>
 	</dict>
 </dict>
 </plist>

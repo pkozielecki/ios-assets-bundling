@@ -84,6 +84,7 @@ private extension AssetDetailsView {
     }
 }
 
+#if DEBUG
 #Preview {
     let model = PreviewAssetDetailsViewModel()
     let imagePath = Bundle.main.path(forResource: "preview-asset-image", ofType: "jpg") ?? ""
@@ -103,3 +104,4 @@ private extension AssetDetailsView {
 //    model.viewState = .loading
     return AssetDetailsView(viewModel: model)
 }
+#endif

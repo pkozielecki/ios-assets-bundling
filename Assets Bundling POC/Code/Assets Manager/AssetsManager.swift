@@ -151,7 +151,11 @@ private extension LiveAssetsManager {
     func getCurrentAssets() async -> CurrentAssets {
         let storedAssets = storage.readAssetsFromStorage()
         let manifestAssets = await fetchManifestPackages()
-        return currentAssetsComposer.compose(storedAssets: storedAssets, manifestPackages: manifestAssets)
+        return currentAssetsComposer.compose(
+                storedAssets: storedAssets,
+                manifestPackages: manifestAssets,
+                essentialDownloadsPermitted: false
+        )
     }
 
     func transfer(_ assetsToTransfer: [AssetData]) {
