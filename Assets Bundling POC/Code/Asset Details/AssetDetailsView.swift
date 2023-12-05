@@ -85,23 +85,23 @@ private extension AssetDetailsView {
 }
 
 #if DEBUG
-#Preview {
-    let model = PreviewAssetDetailsViewModel()
-    let imagePath = Bundle.main.path(forResource: "preview-asset-image", ofType: "jpg") ?? ""
-    model.viewState = .ready(
+    #Preview {
+        let model = PreviewAssetDetailsViewModel()
+        let imagePath = Bundle.main.path(forResource: "preview-asset-image", ofType: "jpg") ?? ""
+        model.viewState = .ready(
 //    model.viewState = .assetsLoaded(
-        .init(
-            title: "Fake asset title",
-            subtitle: "Asset XYZ,\ncreated 10.10.2023",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            imageURL: URL(fileURLWithPath: imagePath),
-            videoURL: URL(string: "http://wp.pl")!,
-            documentURL: URL(string: "http://wp.pl")!,
-            websiteURL: URL(string: "http://wp.pl")!
+            .init(
+                title: "Fake asset title",
+                subtitle: "Asset XYZ,\ncreated 10.10.2023",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                imageURL: URL(fileURLWithPath: imagePath),
+                videoURL: URL(string: "http://wp.pl")!,
+                documentURL: URL(string: "http://wp.pl")!,
+                websiteURL: URL(string: "http://wp.pl")!
+            )
         )
-    )
 //    model.viewState = .error
 //    model.viewState = .loading
-    return AssetDetailsView(viewModel: model)
-}
+        return AssetDetailsView(viewModel: model)
+    }
 #endif

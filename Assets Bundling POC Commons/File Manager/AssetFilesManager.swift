@@ -16,28 +16,13 @@ public protocol AssetFilesManager {
     func ephemeralStorageAssetFile(for assetID: String) -> URL
     func unpackedAssetFolder(for assetID: String) -> URL
     func resourceURL(for assetID: String, of resourceType: ResourceType) -> URL
-    func replaceItemAt(
-        _ originalItemURL: URL,
-        withItemAt newItemURL: URL,
-        backupItemName: String?,
-        options: FileManager.ItemReplacementOptions
-    ) throws -> URL?
+    func replaceItemAt(_ originalItemURL: URL, withItemAt newItemURL: URL, backupItemName: String?, options: FileManager.ItemReplacementOptions) throws -> URL?
     func moveItem(at srcURL: URL, to dstURL: URL) throws
     func removeItem(at URL: URL) throws
     func fileExists(atPath path: String) -> Bool
     func folderExists(at url: URL) -> Bool
-    func unzipItem(
-        at sourceURL: URL,
-        to destinationURL: URL,
-        skipCRC32: Bool,
-        progress: Progress?,
-        pathEncoding: String.Encoding?
-    ) throws
-    func createDirectory(
-        at url: URL,
-        withIntermediateDirectories createIntermediates: Bool,
-        attributes: [FileAttributeKey: Any]?
-    ) throws
+    func unzipItem(at sourceURL: URL, to destinationURL: URL, skipCRC32: Bool, progress: Progress?, pathEncoding: String.Encoding?) throws
+    func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey: Any]?) throws
 }
 
 extension FileManager: AssetFilesManager {

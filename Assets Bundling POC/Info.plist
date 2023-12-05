@@ -11,11 +11,11 @@
 	<key>BAEssentialMaxInstallSize</key>
 	<integer>35000000</integer>
 	<key>BAMaxInstallSize</key>
-	<integer>351832388</integer>
+	<integer>410000000</integer>
 	<key>BAInitialDownloadRestrictions</key>
 	<dict>
 		<key>BADownloadAllowance</key>
-		<integer>351831236</integer>
+		<integer>360000000</integer>
 		<key>BADownloadDomainAllowList</key>
 		<array>
 			<string>lnraxq.am.files.1drv.com</string>
@@ -25,7 +25,7 @@
 			<string>lxruxq.am.files.1drv.com</string>
 		</array>
 		<key>BAEssentialDownloadAllowance</key>
-		<integer>35000000</integer>
+		<integer>30000000</integer>
 	</dict>
 </dict>
 </plist>

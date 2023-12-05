@@ -7,9 +7,9 @@ import Foundation
 
 public protocol CurrentAssetsComposer {
     func compose(
-            storedAssets: [AssetData],
-            manifestPackages: [ManifestPackage],
-            essentialDownloadsPermitted: Bool
+        storedAssets: [AssetData],
+        manifestPackages: [ManifestPackage],
+        essentialDownloadsPermitted: Bool
     ) -> CurrentAssets
 }
 
@@ -18,15 +18,15 @@ public struct LiveCurrentAssetsComposer: CurrentAssetsComposer {
     public init() {}
 
     public func compose(
-            storedAssets: [AssetData],
-            manifestPackages: [ManifestPackage],
-            essentialDownloadsPermitted: Bool
+        storedAssets: [AssetData],
+        manifestPackages: [ManifestPackage],
+        essentialDownloadsPermitted: Bool
     ) -> CurrentAssets {
         let assetsToTransfer = storedAssets.filter { $0.state == .toBeTransferred }
         let assetsToDownload = composeAssetsToDownload(
-                storedAssets: storedAssets,
-                manifestPackages: manifestPackages,
-                essentialDownloadsPermitted: essentialDownloadsPermitted
+            storedAssets: storedAssets,
+            manifestPackages: manifestPackages,
+            essentialDownloadsPermitted: essentialDownloadsPermitted
         )
         let manifestPackagesIDs = manifestPackages.map { $0.id }
         let readyAssets = composeReadyAssets(
@@ -46,9 +46,9 @@ public struct LiveCurrentAssetsComposer: CurrentAssetsComposer {
 private extension LiveCurrentAssetsComposer {
 
     func composeAssetsToDownload(
-            storedAssets: [AssetData],
-            manifestPackages: [ManifestPackage],
-            essentialDownloadsPermitted: Bool
+        storedAssets: [AssetData],
+        manifestPackages: [ManifestPackage],
+        essentialDownloadsPermitted: Bool
     ) -> [AssetData] {
         manifestPackages.filter {
             !isAlreadyDownloaded(package: $0, storedAssets: storedAssets)

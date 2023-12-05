@@ -15,7 +15,6 @@ class AssetsDownloaderExtension: BADownloaderExtension {
     let storage: LocalStorage
     let fileManager: AssetFilesManager
     let downloadManager: BAWrapper
-    private var assets: [AssetData] = []
 
     required init() {
         currentAssetsComposer = LiveCurrentAssetsComposer()
@@ -33,13 +32,14 @@ class AssetsDownloaderExtension: BADownloaderExtension {
         let manifestPackages = manifestURL.getManifestPackage()
         let storedAssets = storage.readAssetsFromStorage()
         let currentAssets = currentAssetsComposer.compose(
-                storedAssets: storedAssets,
-                manifestPackages: manifestPackages,
-                essentialDownloadsPermitted: essentialDownloadsPermitted
+            storedAssets: storedAssets,
+            manifestPackages: manifestPackages,
+            essentialDownloadsPermitted: essentialDownloadsPermitted
         )
 
-        assets = currentAssets.allAssets
+        storage.writeAssetsToStorage(currentAssets.allAssets)
 
+        Logger.ext.log("🤖🟢Essential download permitted: \(essentialDownloadsPermitted)")
         Logger.ext.log("🤖🟢Assets to download: \(currentAssets.assetsToDownload.map { $0.id }, privacy: .public)")
         return Set(currentAssets.assetsToDownload.map { $0.baDownload })
     }
@@ -66,9 +66,9 @@ class AssetsDownloaderExtension: BADownloaderExtension {
             Logger.ext.warning("Download of unsupported type failed: \(failedDownload.identifier). \(error)")
             return
         }
-        
+
         if failedDownload.isEssential {
-            Logger.ext.log("🤖🟠Rescheduling failed download: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
+            Logger.ext.warning("🤖🟠Rescheduling failed download: \(failedDownload.identifier, privacy: .public), error: \(error, privacy: .public)")
             rescheduleFailedEssentialDownload(failedDownload: failedDownload)
         } else {
             // Discussion: Need to assert exclusive control as the app might be modifying assets state at the same time.
@@ -94,12 +94,17 @@ class AssetsDownloaderExtension: BADownloaderExtension {
 
 private extension AssetsDownloaderExtension {
 
+    // Discussion: Cannot just store assets in private var as the extension can be killed and re-started multiple times over.
+    var assets: [AssetData] {
+        storage.readAssetsFromStorage()
+    }
+
     func moveDownloadedPackage(finishedDownload: BADownload, tempFileURL: URL) {
         let targetURL = fileManager.sharedStorageAssetFile(for: finishedDownload.identifier)
         do {
             _ = try fileManager.replaceItemAt(targetURL, withItemAt: tempFileURL, backupItemName: nil, options: [])
             updateAssetState(assetID: finishedDownload.identifier, newState: .toBeTransferred)
-            Logger.ext.log("🤖🟢File transferred: \(targetURL, privacy: .public)")
+            Logger.ext.log("🤖🟢File transferred: \(targetURL.lastPathComponent, privacy: .public)")
         } catch {
             // Discussion: If the file failed to move, it'll have to be re-downloaded.
             Logger.ext.error("🤖🔴Failed to move downloaded file \(tempFileURL.absoluteString, privacy: .public) \(targetURL.absoluteString, privacy: .public), error: \(error, privacy: .public)")
@@ -112,13 +117,13 @@ private extension AssetsDownloaderExtension {
             let optionalDownload = failedDownload.removingEssential()
             try downloadManager.scheduleDownload(optionalDownload)
         } catch {
-            Logger.ext.warning("Failed to reschedule download \(failedDownload.identifier). \(error)")
+            Logger.ext.warning("🤖🔴Failed to reschedule download \(failedDownload.identifier). \(error)")
         }
     }
 
     func updateAssetState(assetID: String, newState: AssetData.State) {
         let updatedAssets = assets.updateState(assetID: assetID, newState: newState)
         storage.writeAssetsToStorage(updatedAssets)
-        assets = updatedAssets
+        Logger.ext.log("🤖🟢Assets saved to storage: \(self.storage.readAssetsFromStorage().map { "\($0.id) - \($0.state)" }, privacy: .public)")
     }
 }

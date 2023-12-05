@@ -62,7 +62,7 @@ extension AssetData {
             essential: essential,
             fileSize: size,
             applicationGroupIdentifier: AppConfiguration.appBundleGroup,
-            priority: .default
+            priority: essential ? .max : .default
         )
     }
 

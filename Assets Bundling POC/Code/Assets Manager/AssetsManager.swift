@@ -152,13 +152,14 @@ private extension LiveAssetsManager {
         let storedAssets = storage.readAssetsFromStorage()
         let manifestAssets = await fetchManifestPackages()
         return currentAssetsComposer.compose(
-                storedAssets: storedAssets,
-                manifestPackages: manifestAssets,
-                essentialDownloadsPermitted: false
+            storedAssets: storedAssets,
+            manifestPackages: manifestAssets,
+            essentialDownloadsPermitted: false
         )
     }
 
     func transfer(_ assetsToTransfer: [AssetData]) {
+        Logger.app.log("📱🟢Transferring assets: \(assetsToTransfer.map { $0.id }, privacy: .public)")
         assetsToTransfer.forEach { asset in
             let from = fileManager.sharedStorageAssetFile(for: asset.id)
             let to = fileManager.permanentStorageAssetFile(for: asset.id)
