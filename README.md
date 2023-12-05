@@ -5,6 +5,7 @@ Welcome to the demonstration of how you can enrich your application with additio
 ## Main app features
 * Uses **Background Assets** framework to download large assets.
 * Uses **Background Assets** Extension to pre-download the assets even if the application is not running!.
+* Showcases **Essential Assets** that are downloaded with the application.
 * Uses **On-Demand Resources** framework to download lightweight assets that should be bundled with the application (e.g. files containing game logics).
 * Can **re-download** broken assets.
 * Uses **SwiftUIRouter** component for navigation.
@@ -29,7 +30,6 @@ Welcome to the demonstration of how you can enrich your application with additio
 
 ## Next steps:
 
-* Add **essential** assets showcase (assets that the application requires to run).
 * Add **Tests** to the App and the Commons framework.
 
 ## Project maintainer
